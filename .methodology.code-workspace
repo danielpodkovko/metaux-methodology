@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			".obsidian": true,
+			"*.code-workspace": true,
+			".DS_Store": true,
+			".vscode": true
+		}
+	}
+}
