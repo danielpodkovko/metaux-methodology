@@ -1,7 +1,14 @@
+// This route generates scenarios for quality recognition training
+// It validates that generated patterns match the intended competency
+// to prevent mixing Signal vs Noise patterns with Quality Recognition
+
 import { NextRequest, NextResponse } from 'next/server';
 import { generateScenario } from '@/app/lib/claude';
 import { ScenarioConfig } from '@/app/lib/schemas/config';
 import { debugLogger } from '@/app/lib/debug-logger';
+import { COMPETENCY_DEFINITIONS, getPatternNames, isValidPattern } from '@/app/lib/competencies/definitions';
+import { DEBUG_CONFIG } from '@/app/lib/debug-config';
+import { enforcePatternCompliance } from '@/app/lib/validation/pattern-validator';
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,8 +31,32 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('🤖 Calling generateScenario function...');
-    const scenario = await generateScenario(config);
+    let scenario = await generateScenario(config);
     console.log('✅ Scenario generated successfully');
+    
+    // Enforce pattern compliance - validate and clean invalid patterns
+    scenario = enforcePatternCompliance(scenario, config.competency);
+    
+    // Filter embedded_patterns to ensure they match the competency
+    const validPatterns = getPatternNames(config.competency.macro, config.competency.micro);
+    
+    // Log if any invalid patterns were generated (for debugging)
+    const invalidPatterns = scenario.embedded_patterns.filter(
+      pattern => !validPatterns.some(valid => pattern.toLowerCase().includes(valid.split('_')[0]))
+    );
+    
+    if (invalidPatterns.length > 0) {
+      console.warn('Invalid patterns generated:', invalidPatterns);
+      console.warn('Expected pattern types:', validPatterns);
+    }
+    
+    // Debug logging for pattern generation
+    if (DEBUG_CONFIG.logPatternGeneration) {
+      console.log('=== Scenario Generation Debug ===');
+      console.log('Requested competency:', config.competency);
+      console.log('Generated patterns:', scenario.embedded_patterns);
+      console.log('Expected pattern types:', getPatternNames(config.competency.macro, config.competency.micro));
+    }
     
     return NextResponse.json(scenario);
   } catch (error) {

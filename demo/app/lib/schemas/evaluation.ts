@@ -6,14 +6,22 @@ export interface Evaluation {
   assessment: {
     correct: boolean;
     accuracy_score: number; // 0-100
+    score_breakdown?: {
+      selectionPoints: number;
+      patternPoints: number;
+      bonusPoints: number;
+      penalties: number;
+    };
     recognized_patterns: string[];
     missed_patterns: string[];
-    reasoning_quality: "excellent" | "good" | "developing" | "poor";
+    confused_competencies?: string[]; // Added for tracking competency confusion
+    reasoning_quality: string;
   };
   feedback: {
     summary: string;
     key_points: string[];
     pattern_guidance: string;
     encouragement: string;
+    competency_clarification?: string; // Added for competency confusion feedback
   };
 }
