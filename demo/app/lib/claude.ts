@@ -4,6 +4,7 @@ import { GeneratedScenario, UserResponse } from './schemas/scenario';
 import { Evaluation } from './schemas/evaluation';
 import { SCENARIO_GENERATOR_PROMPT, ASSESSMENT_AGENT_PROMPT, MENTOR_AGENT_PROMPT } from './prompts';
 import { debugLogger } from './debug-logger';
+import { SelectedVariables } from './variables/system/types';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -35,7 +36,51 @@ export interface ScenarioWithDebug extends GeneratedScenario {
   _debugLog?: any;
 }
 
-export async function generateScenario(config: ScenarioConfig): Promise<ScenarioWithDebug> {
+function buildEnhancedPrompt(config: any): string {
+  const variables = config.selectedVariables;
+  
+  return `Generate a scenario for ${config.competency.micro} pattern recognition.
+
+Configuration:
+- Industry: ${config.universal_variables.industry_context}
+- Company Stage: ${config.universal_variables.company_stage}
+- Time Pressure: ${config.universal_variables.time_pressure}
+- Exercise Type: ${config.exercise_type}
+
+QUALITY PATTERNS TO EMBED:
+${variables.primary.map((v: any) => `
+Pattern: ${v.display_name}
+- Quality Level: ${v.selectedLevel} (${v.levelDetails?.quality_signal || v.quality_signal})
+- Observable Signals: ${v.levelDetails?.observable_signals?.join(', ') || 'Natural signals'}
+- How it manifests: ${v.levelDetails?.scenario_manifestation || 'Show through realistic examples'}
+`).join('\n')}
+
+Generate a realistic scenario that:
+1. Naturally embeds ALL these quality patterns
+2. Shows the patterns through specific examples and observations
+3. Does NOT explicitly state what the patterns are
+4. Feels authentic to the ${config.universal_variables.industry_context} context
+5. Reflects the ${config.universal_variables.time_pressure} time pressure appropriately
+
+CRITICAL JSON FORMATTING RULES:
+- Return ONLY valid JSON, no markdown, no explanations
+- Use double quotes for all strings
+- Escape any quotes inside strings with \"
+- Replace newlines in text with spaces or \\n
+- No trailing commas
+- No comments
+
+Return this EXACT JSON structure:
+{
+  "context": "1-2 sentences setting the scene WITHOUT newlines",
+  "situation": "Detailed scenario where patterns manifest naturally - use spaces not newlines",
+  "data_presented": "Specific research output/data to evaluate - format as single paragraph",
+  "decision_prompt": "What the user needs to judge",
+  "embedded_patterns": ["pattern1", "pattern2", "pattern3"]
+}`;
+}
+
+export async function generateScenario(config: any): Promise<ScenarioWithDebug> {
   const startTime = Date.now();
   let modelUsed = MODEL_CONFIG.scenario.model;
   
@@ -46,13 +91,19 @@ export async function generateScenario(config: ScenarioConfig): Promise<Scenario
       model: modelUsed 
     });
     
-    const userMessage = `Generate a scenario for this configuration:
+    // Check if we have selected variables to include in the prompt
+    let userMessage: string;
+    if (config.selectedVariables) {
+      userMessage = buildEnhancedPrompt(config);
+    } else {
+      userMessage = `Generate a scenario for this configuration:
 ${JSON.stringify(config, null, 2)}
 
 Focus specifically on the ${config.competency.micro} micro-competency patterns.
 Remember: Do NOT include patterns from other competencies like Signal vs Noise.
 
 Return ONLY a valid JSON object with the required fields.`;
+    }
     
     let response;
     try {
@@ -97,7 +148,58 @@ Return ONLY a valid JSON object with the required fields.`;
     }
     cleanedText = cleanedText.trim();
 
-    const scenarioData = JSON.parse(cleanedText);
+    // Sanitize JSON to handle control characters
+    // Replace literal newlines, tabs, and other control characters in string values
+    cleanedText = cleanedText
+      .replace(/\\n/g, '\\\\n')  // Escape newlines
+      .replace(/\\t/g, '\\\\t')  // Escape tabs
+      .replace(/[\x00-\x1F\x7F-\x9F]/g, ' '); // Remove other control characters
+
+    let scenarioData;
+    try {
+      scenarioData = JSON.parse(cleanedText);
+    } catch (parseError) {
+      console.error('JSON Parse Error:', parseError);
+      console.error('Raw text (first 500 chars):', cleanedText.substring(0, 500));
+      
+      // Try one more time with aggressive cleaning
+      const aggressivelyCleaned = cleanedText
+        .split('\n')
+        .map(line => line.trim())
+        .join(' ')
+        .replace(/\s+/g, ' ');
+      
+      try {
+        scenarioData = JSON.parse(aggressivelyCleaned);
+        console.log('Successfully parsed after aggressive cleaning');
+      } catch (secondError) {
+        console.error('Second parse attempt failed, retrying generation...');
+        
+        // Retry the entire generation with stronger instructions
+        const retryResponse = await anthropic.messages.create({
+          model: modelUsed,
+          max_tokens: modelUsed === 'claude-opus-4-1-20250805' ? 1000 : MODEL_CONFIG.scenario.max_tokens,
+          temperature: 0.5, // Lower temperature for more consistent output
+          system: SCENARIO_GENERATOR_PROMPT + '\n\nIMPORTANT: Return ONLY valid JSON with no formatting issues.',
+          messages: [{
+            role: 'user',
+            content: userMessage + '\n\nREMINDER: Output must be valid JSON only, no markdown, no extra text.'
+          }]
+        });
+        
+        const retryContent = retryResponse.content[0];
+        if (retryContent.type === 'text') {
+          let retryText = retryContent.text.trim();
+          if (retryText.includes('```')) {
+            retryText = retryText.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+          }
+          scenarioData = JSON.parse(retryText);
+          console.log('Successfully generated on retry');
+        } else {
+          throw new Error('Failed to generate valid JSON after retry');
+        }
+      }
+    }
     
     const duration = Date.now() - startTime;
     console.log(`Scenario generation took ${duration}ms with ${modelUsed}`);
