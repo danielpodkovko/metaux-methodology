@@ -1,0 +1,1 @@
+Another observation from the demo is it's really frustrating to type a lot of text, especially in the analysis or when you expand your thinking. So probably providing voice to text feature would be really nice from the UX perspective.

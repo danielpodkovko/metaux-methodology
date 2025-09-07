@@ -1,0 +1,143 @@
+# Exploring narrative-data balance for pattern recognition
+
+**Date**: September 06, 2025  
+**Challenge**: Finding the sweet spot between clarity and discovery
+
+---
+
+## Approach 1: Embedded Evidence
+
+### The Rushed Enterprise Study
+**Healthcare Enterprise** • Board presentation next week
+
+The UX team tested the new patient portal with 15 participants over 3 days, following their IRB-approved protocol meticulously. IT helped with recruitment, grabbing whoever was available in the break room - mostly residents and nurses between shifts.
+
+Sessions ran in the hospital cafeteria during lunch hours. The research lead noted: "We captured everything - 100% task completion, 4.8/5 satisfaction average. Though the PA system kept interrupting. One participant even said 'this would be perfect with API access for our clinical tools.'"
+
+The demographic forms show ages 25-35, all marking "high" for tech proficiency. Several recordings have sections marked "inaudible - Code Blue announcement."
+
+**Question:** *"What concerns you about using this data for designing for the hospital's primary patient demographic?"*
+
+---
+
+## Approach 2: Narrative with Subtle Flags
+
+### The Startup's Weekend Validation
+**Fintech Startup** • Funding round approaching
+
+The founder returned from a weekend of guerrilla research, excited: "We talked to 47 people! Everyone loves it!" His voice memos capture conversations with day traders at a tech conference, while his designer partner's Slack notes from Starbucks sessions tell a different story: "User 5 asked 'wait, is this for professionals or beginners?' User 8 couldn't find the main feature."
+
+Between them, they documented 30 conversations. The founder insists the three financial advisors they caught were "super bullish," though the designer's notes on the same conversations mention "significant confusion about the value prop."
+
+**Question:** *"Which patterns in the team's findings suggest deeper issues with the research approach?"*
+
+---
+
+## Approach 3: Documentary Style
+
+### Research Log: E-commerce Checkout Study
+**Scale-up** • Two-month preparation
+
+**From the research report:**
+*"We invested in professional facilities and recruited 25 verified online shoppers through our panel partner. The data shows remarkable consistency - task completion times clustered between 4-5 minutes, satisfaction ratings all between 3.0-3.5."*
+
+**From the session recordings:**
+- Participant 3: "This is fine, I guess. Faster checkout would be nice."
+- Participant 8: "Oh wait, this isn't the insurance one, right?"
+- Participant 14: "Seems normal. Maybe fewer steps?"
+- Participant 20: [Completes task in exactly 4:32, same as P12 and P17]
+
+**From the recruitment database:**
+*Note: 20 participants flagged as "frequent study participants (10+ per month)"*
+
+**Question:** *"What patterns reveal this isn't authentic user behavior?"*
+
+---
+
+## Approach 4: Conversational Reveal
+
+### Team Debrief: Patient Portal
+**Healthcare Enterprise**
+
+"How'd the testing go?"
+
+"Great! We hit all 15 participants, followed protocol perfectly. The cafeteria was noisy but we powered through. Everyone completed the tasks."
+
+"Who'd you test with?"
+
+"IT grabbed people from the break room. Super convenient - mostly residents and nurses on break."
+
+"Any issues?"
+
+"Some recordings have gaps from the PA announcements, but we got the gist. Oh, and lots of requests for API access and clinical tool integration. Shows they're really thinking about workflow!"
+
+"What about difficulty completing tasks?"
+
+"None at all. 100% completion. They flew through everything."
+
+**Question:** *"What's missing from this seemingly successful study?"*
+
+---
+
+## Approach 5: Mixed Signals Format
+
+### Fintech App Validation
+
+**The good:** Caught 3 financial advisors, 5 day traders, and an investment banker at a weekend tech conference.
+
+**The concerning:** Founder says "everyone loved it" but designer documented "confusion about target audience" from the same conversations.
+
+**The gap:** 47 people approached, 30 documented, 17 lost completely.
+
+**The environment:** Conference hallway conversations and Starbucks ambient noise.
+
+**Question:** *"For early-stage validation, which of these issues actually matters?"*
+
+---
+
+## Analysis: What Works?
+
+### Sweet Spot Elements:
+1. **Narrative provides context** without spelling everything out
+2. **Data appears naturally** in dialogue or observations
+3. **Contradictions are present** but not highlighted
+4. **Numbers tell stories** (100% completion, ages 25-35)
+5. **Quotes reveal bias** without saying "bias"
+
+### Cognitive Load Balance:
+- **Too easy:** Lists with "PROBLEM: Wrong participants"
+- **Too hard:** Pure narrative with all clues buried
+- **Just right:** Key facts visible but patterns need recognition
+
+### The "Aha" Moment:
+Students should think:
+- "Wait, they tested with staff not patients..."
+- "Hold on, everyone finishing in exactly 4:32 is weird..."
+- "Why does the founder hear love but designer hear confusion?"
+
+---
+
+## Recommended Format:
+
+**Setup** (1 line)
+**Story** (3-4 sentences with embedded clues)
+**Evidence** (2-3 subtle data points, naturally presented)
+**Question** (Directs attention without giving away answer)
+
+This creates ~6-8 pieces of information to synthesize - enough for pattern recognition but not overwhelming.
+
+## Example Implementation:
+
+Instead of:
+```
+Participants:
+- 15 hospital staff (not patients) ← Too obvious
+```
+
+Try:
+```
+"IT helped recruit from the break room - mostly residents 
+and nurses between shifts" ← Requires inference
+```
+
+The pattern is there but requires the student to think: "Wait, break room... residents and nurses... these aren't patients!"

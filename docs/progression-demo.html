@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaUX - Interview Question Quality Progression</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f7fa;
+            height: 100vh;
+            overflow: hidden;
+            color: #2d3748;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .level-indicator {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .level-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .level-beginner {
+            background: #e6fffa;
+            color: #047857;
+        }
+
+        .level-intermediate {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .level-advanced {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 65px);
+        }
+
+        /* Left Pane - Exercise */
+        .exercise-pane {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            overflow-y: auto;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .competency-header {
+            margin-bottom: 32px;
+        }
+
+        .competency-title {
+            font-size: 14px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .exercise-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .scenario-brief {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .scenario-brief h3 {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .interview-questions {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .question-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Beginner: Multiple Choice */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            padding: 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-card:hover {
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: #f6f8ff;
+        }
+
+        /* Intermediate: Categorization */
+        .categorization-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .category-column {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 200px;
+        }
+
+        .category-header {
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .category-good { color: #047857; }
+        .category-bad { color: #dc2626; }
+        .category-depends { color: #ea580c; }
+
+        .draggable-question {
+            background: white;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: move;
+            border: 2px solid #e2e8f0;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .draggable-question.dragging {
+            opacity: 0.5;
+        }
+
+        .category-column.drag-over {
+            background: #edf2ff;
+        }
+
+        .questions-bank {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        /* Advanced: Free Text */
+        .freetext-container {
+            margin-bottom: 24px;
+        }
+
+        .freetext-prompt {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .freetext-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .freetext-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .char-count {
+            text-align: right;
+            color: #718096;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* Right Pane - AI Mentor */
+        .mentor-pane {
+            width: 420px;
+            background: #1a202c;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mentor-header {
+            padding: 24px;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .mentor-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .mentor-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .mentor-chat {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .mentor-message {
+            background: #2d3748;
+            padding: 16px;
+            border-radius: 12px;
+            line-height: 1.6;
+            font-size: 14px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pattern-highlight {
+            color: #ffd700;
+            font-weight: 500;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border: 1px solid #667eea40;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .typing-indicator {
+            display: inline-block;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #667eea;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Action Buttons */
+        .action-bar {
+            padding: 20px;
+            border-top: 1px solid #2d3748;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #4a5568;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Dialogue Mode */
+        .dialogue-input-container {
+            padding: 16px;
+            border-top: 1px solid #2d3748;
+            background: #2d3748;
+        }
+
+        .dialogue-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #4a5568;
+            background: #1a202c;
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: none;
+            min-height: 60px;
+        }
+
+        .dialogue-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .dialogue-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #718096;
+        }
+
+        /* Level Transition */
+        .level-complete-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .level-complete-content {
+            background: white;
+            border-radius: 20px;
+            padding: 48px;
+            max-width: 500px;
+            text-align: center;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .level-complete-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+
+        .level-complete-content p {
+            color: #718096;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .level-progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Level Complete Modal -->
+    <div class="level-complete-modal" id="levelCompleteModal">
+        <div class="level-complete-content">
+            <h2 id="levelCompleteTitle">Beginner Level Complete!</h2>
+            <p id="levelCompleteMessage">
+                You've mastered the basics of identifying question quality. Ready to advance to more nuanced pattern recognition?
+            </p>
+            <div class="level-progress-bar">
+                <div class="level-progress-fill" id="levelProgressFill" style="width: 33%"></div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 14px;" onclick="continueToNextLevel()">
+                Continue to Intermediate
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">MetaUX</div>
+        <div class="level-indicator">
+            <div class="level-badge level-beginner" id="levelBadge">BEGINNER</div>
+            <div class="progress-indicator">
+                <span id="progressText">Scenario 1 of 3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Pane - Exercise -->
+        <div class="exercise-pane">
+            <div class="competency-header">
+                <div class="competency-title">Quality Recognition</div>
+                <h2 class="exercise-title" id="exerciseTitle">Interview Question Assessment</h2>
+            </div>
+
+            <div class="scenario-brief" id="scenarioBrief">
+                <h3>Context</h3>
+                <p>You're reviewing interview questions for a user research study about a task management app. Assess the quality of these questions.</p>
+            </div>
+
+            <div id="exerciseContent">
+                <!-- Dynamic content based on level -->
+            </div>
+        </div>
+
+        <!-- Right Pane - AI Mentor -->
+        <div class="mentor-pane">
+            <div class="mentor-header">
+                <div class="mentor-title">
+                    <div class="mentor-avatar">🤖</div>
+                    <span>AI Mentor</span>
+                </div>
+            </div>
+
+            <div class="mentor-chat" id="mentorChat">
+                <div class="mentor-message">
+                    Welcome to Interview Question Quality training! 
+                    
+                    We'll start with clear examples to build your pattern recognition, then progressively work toward more nuanced scenarios.
+                    
+                    Let's begin with some obvious patterns.
+                </div>
+            </div>
+
+            <div id="actionArea">
+                <div class="action-bar">
+                    <button class="btn btn-secondary" onclick="previousScenario()" id="prevBtn" disabled>Previous</button>
+                    <button class="btn btn-secondary" onclick="skipScenario()" id="skipBtn">Skip</button>
+                    <button class="btn btn-primary" onclick="handleSubmit()" id="submitBtn">Submit Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progression scenarios
+        const scenarios = {
+            beginner: [
+                {
+                    id: 'b1',
+                    title: 'Obvious Leading Questions',
+                    context: 'Reviewing questions for a study about task prioritization features',
+                    questions: [
+                        "Don't you think our new priority system is much better than the old one?",
+                        "You probably hate when tasks don't have clear priorities, right?",
+                        "Wouldn't it be amazing if the app could automatically prioritize everything for you?",
+                        "I bet you'd rate our prioritization feature 10/10, wouldn't you?"
+                    ],
+                    type: 'multiple-choice',
+                    options: [
+                        'High quality - engaging questions',
+                        'Poor quality - heavily biased',
+                        'Mixed quality - some good elements',
+                        'Neutral - standard approach'
+                    ],
+                    correctIndex: 1,
+                    feedback: {
+                        initial: "These questions demonstrate severe bias patterns.",
+                        teaching: "Notice how <span class='pattern-highlight'>every question suggests its own answer</span>. 'Don't you think...', 'You probably...', 'Wouldn't it be...' - these all lead the participant.",
+                        pattern: "Leading questions that contaminate responses"
+                    }
+                },
+                {
+                    id: 'b2',
+                    title: 'Open vs Closed Questions',
+                    context: 'Comparing different question styles for understanding user workflows',
+                    questions: [
+                        "Q1: Do you use task management software? (Yes/No)",
+                        "Q2: How do you currently manage your daily tasks?",
+                        "Q3: Is prioritization important to you? (Yes/No)",
+                        "Q4: Walk me through how you decided what to work on this morning."
+                    ],
+                    type: 'multiple-choice',
+                    options: [
+                        'Q1 and Q3 are better - clear and specific',
+                        'Q2 and Q4 are better - exploratory and open',
+                        'All are equally good for different purposes',
+                        'Closed questions should be avoided entirely'
+                    ],
+                    correctIndex: 1,
+                    feedback: {
+                        initial: "Good recognition of open vs closed question patterns.",
+                        teaching: "Open questions (Q2, Q4) <span class='pattern-highlight'>invite stories and context</span>, revealing unexpected insights. Closed questions get facts but miss the 'why'.",
+                        pattern: "Open questions generate richer insights"
+                    }
+                },
+                {
+                    id: 'b3',
+                    title: 'Solution vs Problem Focus',
+                    context: 'Questions for a study about team collaboration features',
+                    questions: [
+                        "What features would you like to see for team collaboration?",
+                        "What challenges do you face when working with your team?",
+                        "Would you use a real-time chat feature?",
+                        "Tell me about the last time team coordination was frustrating."
+                    ],
+                    type: 'multiple-choice',
+                    options: [
+                        'Questions 1 and 3 - focus on solutions users want',
+                        'Questions 2 and 4 - focus on understanding problems',
+                        'Mix of both is ideal',
+                        'All questions are equally valuable'
+                    ],
+                    correctIndex: 1,
+                    feedback: {
+                        initial: "Excellent! You recognized the problem vs solution pattern.",
+                        teaching: "Questions 2 and 4 <span class='pattern-highlight'>explore the problem space</span> without assuming solutions. This reveals actual needs rather than feature requests.",
+                        pattern: "Problem-focused questions reveal true needs"
+                    }
+                }
+            ],
+            intermediate: [
+                {
+                    id: 'i1',
+                    title: 'Categorize Question Quality',
+                    context: `You have 8 interview questions to categorize. Consider:
+                        • Good Questions: Open-ended, exploratory, unbiased
+                        • Poor Questions: Leading, assumptive, or biased
+                        • Depends on Context: Could be useful in specific situations`,
+                    type: 'categorization',
+                    questions: [
+                        "How do you currently handle task dependencies?",
+                        "Don't you find manual scheduling tedious?",
+                        "What happens when priorities conflict?",
+                        "Rate our app from 1-10",
+                        "Tell me about your morning planning routine",
+                        "Would you pay $10/month for this?",
+                        "What's most frustrating about your current tools?",
+                        "You need better automation, right?"
+                    ],
+                    categories: ['Good Questions', 'Poor Questions', 'Depends on Context'],
+                    correctCategories: {
+                        'Good Questions': [0, 2, 4, 6],
+                        'Poor Questions': [1, 7],
+                        'Depends on Context': [3, 5]
+                    },
+                    feedback: {
+                        initial: "Let's review your categorization and reasoning.",
+                        teaching: "Good questions are <span class='pattern-highlight'>open and exploratory</span>. Poor ones lead or assume. Context-dependent ones might be useful but need careful timing.",
+                        pattern: "Quality depends on openness and neutrality"
+                    }
+                },
+                {
+                    id: 'i2',
+                    title: 'Identify and Fix Problems',
+                    context: 'These questions have subtle issues. Identify problems and suggest improvements.',
+                    type: 'analysis',
+                    questions: [
+                        "How often do you use task management apps and why do you prefer ours?",
+                        "What are the top three problems with your workflow?",
+                        "Describe your ideal solution for team coordination.",
+                        "How does our app compare to others you've tried?"
+                    ],
+                    feedback: {
+                        initial: "These questions have subtle but important issues.",
+                        teaching: "Q1 has <span class='pattern-highlight'>double-barreled structure</span> and assumes preference. Q2 forces ranking prematurely. Q3 jumps to solutions. Q4 assumes they've tried others.",
+                        pattern: "Compound questions and hidden assumptions"
+                    }
+                },
+                {
+                    id: 'i3',
+                    title: 'Sequence and Flow',
+                    context: 'Arrange these questions in optimal interview order and explain your reasoning.',
+                    type: 'sequencing',
+                    questions: [
+                        "What specific features would help you most?",
+                        "Tell me about your role and responsibilities.",
+                        "How do you currently manage projects?",
+                        "What's not working well with your current approach?",
+                        "If you had a magic wand, what would you change?"
+                    ],
+                    optimalOrder: [1, 2, 3, 4, 0],
+                    feedback: {
+                        initial: "Question sequence shapes the conversation quality.",
+                        teaching: "Start broad (role) → current state → problems → dreams → specific solutions. This <span class='pattern-highlight'>builds context before diving deep</span>.",
+                        pattern: "Funnel from context to specifics"
+                    }
+                }
+            ],
+            advanced: [
+                {
+                    id: 'a1',
+                    title: 'Write Your Analysis',
+                    context: 'A junior researcher drafted these questions for a study on remote work productivity. Analyze their quality and suggest improvements.',
+                    type: 'freetext',
+                    questions: [
+                        "How has working from home affected your productivity?",
+                        "Do you prefer remote or office work?",
+                        "What tools do you use for remote collaboration?",
+                        "Would a virtual office space improve your team connection?"
+                    ],
+                    prompt: "Analyze these questions for quality issues. Consider bias, assumptions, openness, and what insights they might miss. What patterns do you notice? How would you improve them?",
+                    minLength: 200,
+                    feedback: {
+                        initial: "Let me review your analysis...",
+                        teaching: "Key issues: Q1 assumes effect exists, Q2 forces binary choice, Q3 is too narrow, Q4 leads toward a specific solution.",
+                        pattern: "Multiple subtle biases limiting insight potential"
+                    }
+                },
+                {
+                    id: 'a2',
+                    title: 'Dialogue Challenge',
+                    context: 'You are reviewing an interview guide. The senior stakeholder insists on adding their questions. Navigate this situation.',
+                    type: 'dialogue',
+                    rounds: [
+                        {
+                            prompt: "The VP of Product wants to add: 'Users will love our AI features, right?' and 'How much would you pay for premium automation?' to the interview guide. How do you respond?",
+                            mentorResponse: "Interesting approach. The VP seems eager to validate specific assumptions. How would you address their need for validation while maintaining research quality?"
+                        },
+                        {
+                            prompt: "The VP says: 'But we need to know if the AI features are worth building! How else can we find out?' How do you guide them toward better questions?",
+                            mentorResponse: "Good reframing. You're helping them see that understanding the problem space first will make their AI investment decision clearer. This is advanced stakeholder management."
+                        },
+                        {
+                            prompt: "Final challenge: Write 2-3 alternative questions that address the VP's concerns while maintaining research integrity.",
+                            mentorResponse: "Excellent synthesis. You've maintained research quality while addressing business needs. This is expert-level pattern recognition in action."
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // State management
+        let currentLevel = 'beginner';
+        let currentScenarioIndex = 0;
+        let selectedOption = null;
+        let draggedElement = null;
+        let currentScenarios = scenarios.beginner;
+        let dialogueRound = 0;
+
+        // Initialize
+        loadScenario();
+
+        function loadScenario() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            
+            // Update header
+            document.getElementById('progressText').textContent = 
+                `Scenario ${currentScenarioIndex + 1} of ${currentScenarios.length}`;
+            
+            // Update exercise title and context
+            document.getElementById('exerciseTitle').textContent = scenario.title;
+            if (scenario.context) {
+                document.getElementById('scenarioBrief').innerHTML = `
+                    <h3>Context</h3>
+                    <p>${scenario.context}</p>
+                `;
+            }
+
+            // Load exercise content based on type
+            const contentDiv = document.getElementById('exerciseContent');
+            
+            if (scenario.type === 'multiple-choice') {
+                loadMultipleChoice(scenario, contentDiv);
+            } else if (scenario.type === 'categorization') {
+                loadCategorization(scenario, contentDiv);
+            } else if (scenario.type === 'freetext') {
+                loadFreetext(scenario, contentDiv);
+            } else if (scenario.type === 'dialogue') {
+                loadDialogue(scenario, contentDiv);
+            } else if (scenario.type === 'analysis') {
+                loadAnalysis(scenario, contentDiv);
+            } else if (scenario.type === 'sequencing') {
+                loadSequencing(scenario, contentDiv);
+            }
+
+            // Reset mentor
+            resetMentor(scenario);
+            
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentScenarioIndex === 0;
+            // Always enable submit for multiple choice, disable initially for others
+            if (scenario.type === 'multiple-choice') {
+                document.getElementById('submitBtn').disabled = true; // Need to select an option first
+            } else {
+                document.getElementById('submitBtn').disabled = false; // Can submit anytime
+            }
+        }
+
+        function loadMultipleChoice(scenario, container) {
+            let html = '<div class="interview-questions">';
+            scenario.questions.forEach((q, i) => {
+                html += `<div class="question-item">${i + 1}. ${q}</div>`;
+            });
+            html += '</div>';
+            
+            html += '<div class="options-grid">';
+            scenario.options.forEach((option, i) => {
+                html += `
+                    <div class="option-card" onclick="selectOption(${i})">
+                        ${option}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        function loadCategorization(scenario, container) {
+            let html = '<div class="questions-bank"><h3>Questions to Categorize:</h3>';
+            scenario.questions.forEach((q, i) => {
+                html += `
+                    <div class="draggable-question" draggable="true" data-index="${i}" ondragstart="drag(event)">
+                        ${q}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            html += '<div class="categorization-container">';
+            scenario.categories.forEach(cat => {
+                const colorClass = cat.includes('Good') ? 'category-good' : 
+                                  cat.includes('Poor') ? 'category-bad' : 'category-depends';
+                html += `
+                    <div class="category-column" ondrop="drop(event, '${cat}')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+                        <div class="category-header ${colorClass}">${cat}</div>
+                        <div class="category-items" id="cat-${cat.replace(/\s/g, '-')}"></div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            // Add reasoning section
+            html += `
+                <div class="reasoning-section" id="reasoningSection" style="display: none;">
+                    <div class="freetext-prompt" style="background: #f7fafc; padding: 16px; border-radius: 12px; margin-top: 24px; border-left: 4px solid #667eea;">
+                        <strong>Explain your categorization:</strong><br>
+                        What patterns did you recognize? Why did you place certain questions in each category?
+                    </div>
+                    <textarea class="freetext-input" id="categorizationReasoning" 
+                        style="margin-top: 12px; min-height: 120px;"
+                        placeholder="Explain your reasoning... (minimum 100 characters)"
+                        oninput="updateReasoningCount(this, 100)"></textarea>
+                    <div class="char-count">0 / 100 minimum</div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function loadAnalysis(scenario, container) {
+            let html = '<div class="interview-questions">';
+            scenario.questions.forEach((q, i) => {
+                html += `<div class="question-item">${i + 1}. ${q}</div>`;
+            });
+            html += '</div>';
+            
+            html += `
+                <div class="freetext-container">
+                    <div class="freetext-prompt">
+                        Identify the quality issues in each question and suggest improvements. 
+                        Consider bias, assumptions, and missed opportunities.
+                    </div>
+                    <textarea class="freetext-input" id="analysisInput" 
+                        placeholder="Write your analysis here..."
+                        oninput="updateCharCount(this)"></textarea>
+                    <div class="char-count">0 / 200 minimum</div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function loadSequencing(scenario, container) {
+            let html = '<div class="questions-bank"><h3>Arrange these questions in optimal order:</h3>';
+            
+            // Randomize the questions
+            const shuffled = [...scenario.questions].sort(() => Math.random() - 0.5);
+            shuffled.forEach((q, i) => {
+                const originalIndex = scenario.questions.indexOf(q);
+                html += `
+                    <div class="draggable-question" draggable="true" data-original="${originalIndex}" ondragstart="drag(event)">
+                        ${q}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            html += `
+                <div class="freetext-container">
+                    <div class="freetext-prompt">
+                        Explain your sequencing logic. Why this order?
+                    </div>
+                    <textarea class="freetext-input" id="sequenceExplanation" 
+                        placeholder="Explain your reasoning..."
+                        oninput="updateCharCount(this)"></textarea>
+                    <div class="char-count">0 / 100 minimum</div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function loadFreetext(scenario, container) {
+            let html = '';
+            
+            if (scenario.questions) {
+                html += '<div class="interview-questions">';
+                scenario.questions.forEach((q, i) => {
+                    html += `<div class="question-item">${i + 1}. ${q}</div>`;
+                });
+                html += '</div>';
+            }
+            
+            html += `
+                <div class="freetext-container">
+                    <div class="freetext-prompt">
+                        ${scenario.prompt}
+                    </div>
+                    <textarea class="freetext-input" id="freetextInput" 
+                        placeholder="Type your analysis here... (minimum ${scenario.minLength} characters)"
+                        oninput="updateCharCount(this, ${scenario.minLength})"></textarea>
+                    <div class="char-count">0 / ${scenario.minLength} minimum</div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function loadDialogue(scenario, container) {
+            dialogueRound = 0;
+            const round = scenario.rounds[dialogueRound];
+            
+            let html = `
+                <div class="freetext-container">
+                    <div class="freetext-prompt">
+                        <strong>Scenario Round ${dialogueRound + 1}:</strong><br><br>
+                        ${round.prompt}
+                    </div>
+                    <textarea class="freetext-input" id="dialogueInput" 
+                        placeholder="Type your response..."
+                        oninput="updateCharCount(this, 100)"></textarea>
+                    <div class="char-count">0 / 100 minimum</div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Update action area for dialogue
+            document.getElementById('actionArea').innerHTML = `
+                <div class="dialogue-controls" style="padding: 0 20px;">
+                    <span>Round ${dialogueRound + 1} of ${scenario.rounds.length}</span>
+                    <span id="attemptCount">Attempt 1 of 2</span>
+                </div>
+                <div class="action-bar">
+                    <button class="btn btn-secondary" onclick="previousScenario()" id="prevBtn">Previous</button>
+                    <button class="btn btn-primary" onclick="submitDialogue()" id="submitBtn">Submit Response</button>
+                </div>
+            `;
+        }
+
+        function selectOption(index) {
+            selectedOption = index;
+            document.querySelectorAll('.option-card').forEach((card, i) => {
+                card.classList.toggle('selected', i === index);
+            });
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function updateCharCount(textarea, minLength = 0) {
+            const count = textarea.value.length;
+            const counter = textarea.parentElement.querySelector('.char-count');
+            counter.textContent = minLength > 0 ? 
+                `${count} / ${minLength} minimum (optional)` : 
+                `${count} characters`;
+            
+            // Always allow submission, but show recommendation
+            document.getElementById('submitBtn').disabled = false;
+            if (count < minLength) {
+                counter.style.color = '#e53e3e';
+            } else {
+                counter.style.color = '#718096';
+            }
+        }
+
+        // Drag and drop functions
+        function drag(event) {
+            draggedElement = event.target;
+            event.target.classList.add('dragging');
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('drag-over');
+        }
+
+        function dragLeave(event) {
+            event.currentTarget.classList.remove('drag-over');
+        }
+
+        function drop(event, category) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('drag-over');
+            
+            const categoryDiv = document.getElementById('cat-' + category.replace(/\s/g, '-'));
+            categoryDiv.appendChild(draggedElement);
+            draggedElement.classList.remove('dragging');
+            
+            // Check if all questions are categorized
+            const remainingQuestions = document.querySelector('.questions-bank').querySelectorAll('.draggable-question');
+            
+            if (remainingQuestions.length === 0) {
+                // Show reasoning section
+                const reasoningSection = document.getElementById('reasoningSection');
+                if (reasoningSection) {
+                    reasoningSection.style.display = 'block';
+                    // Enable submit - reasoning is optional
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            }
+        }
+        
+        function updateReasoningCount(textarea, minLength) {
+            const count = textarea.value.length;
+            const counter = textarea.parentElement.querySelector('.char-count');
+            counter.textContent = `${count} / ${minLength} recommended`;
+            
+            // Always allow submission, just show recommendation
+            document.getElementById('submitBtn').disabled = false;
+            if (count < minLength) {
+                counter.style.color = '#e53e3e';
+            } else {
+                counter.style.color = '#718096';
+            }
+        }
+
+        function resetMentor(scenario) {
+            const chat = document.getElementById('mentorChat');
+            
+            let mentorMessage = '';
+            if (currentLevel === 'beginner') {
+                mentorMessage = `Let's work on <span class='pattern-highlight'>${scenario.title}</span>. Look for obvious patterns in these questions. What makes them effective or problematic?`;
+            } else if (currentLevel === 'intermediate') {
+                mentorMessage = `Now we're looking for more subtle patterns. Consider not just what's asked, but how it's asked and what assumptions are embedded.`;
+            } else {
+                mentorMessage = `Time to demonstrate synthesis. Show me how you'd apply pattern recognition to improve research quality.`;
+            }
+            
+            chat.innerHTML = `<div class="mentor-message">${mentorMessage}</div>`;
+        }
+
+        function handleSubmit() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            
+            if (scenario.type === 'multiple-choice') {
+                submitMultipleChoice();
+            } else if (scenario.type === 'categorization') {
+                submitCategorization();
+            } else if (scenario.type === 'freetext') {
+                submitFreetext();
+            } else if (scenario.type === 'analysis' || scenario.type === 'sequencing') {
+                submitFreetext(); // Use same handler
+            }
+        }
+
+        function submitMultipleChoice() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            const isCorrect = selectedOption === scenario.correctIndex;
+            
+            addMentorFeedback(scenario.feedback, isCorrect);
+            
+            // Change button to "Next"
+            document.getElementById('submitBtn').textContent = 'Next Scenario';
+            document.getElementById('submitBtn').onclick = nextScenario;
+        }
+
+        function submitCategorization() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            const reasoning = document.getElementById('categorizationReasoning')?.value || '';
+            
+            // Check categorization accuracy
+            let correct = 0;
+            let total = 0;
+            let misplacedDetails = [];
+            
+            for (const [category, indices] of Object.entries(scenario.correctCategories)) {
+                const catDiv = document.getElementById('cat-' + category.replace(/\s/g, '-'));
+                const placed = catDiv.querySelectorAll('.draggable-question');
+                
+                placed.forEach(item => {
+                    const index = parseInt(item.dataset.index);
+                    total++;
+                    if (indices.includes(index)) {
+                        correct++;
+                    } else {
+                        // Track what was misplaced
+                        misplacedDetails.push({
+                            question: scenario.questions[index],
+                            placedIn: category,
+                            shouldBe: Object.keys(scenario.correctCategories).find(cat => 
+                                scenario.correctCategories[cat].includes(index))
+                        });
+                    }
+                });
+            }
+            
+            const accuracy = (correct / total) * 100;
+            const isGood = accuracy >= 70;
+            
+            // Analyze reasoning quality
+            const hasGoodReasoning = reasoning.toLowerCase().includes('lead') || 
+                                    reasoning.toLowerCase().includes('open') || 
+                                    reasoning.toLowerCase().includes('bias') ||
+                                    reasoning.toLowerCase().includes('assumption');
+            
+            // Provide contextual feedback
+            let initialFeedback = `You correctly categorized ${correct} of ${total} questions.`;
+            
+            if (reasoning.length > 100) {
+                if (hasGoodReasoning) {
+                    initialFeedback += ` Your reasoning shows good pattern recognition - you identified key quality indicators.`;
+                } else {
+                    initialFeedback += ` I see your reasoning, but let's dig deeper into the specific patterns.`;
+                }
+            }
+            
+            // Add specific feedback about misplacements
+            if (misplacedDetails.length > 0 && misplacedDetails.length <= 2) {
+                setTimeout(() => {
+                    const detail = misplacedDetails[0];
+                    addMentorMessage(`
+                        About "${detail.question.substring(0, 50)}..." - 
+                        You placed this in '${detail.placedIn}' but it belongs in '${detail.shouldBe}'. 
+                        <span class='pattern-highlight'>Look for the assumption or bias pattern</span> in how it's phrased.
+                    `);
+                }, 2000);
+            }
+            
+            addMentorFeedback(scenario.feedback, isGood, initialFeedback);
+            
+            document.getElementById('submitBtn').textContent = 'Next Scenario';
+            document.getElementById('submitBtn').onclick = nextScenario;
+        }
+
+        function submitFreetext() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            const input = document.getElementById('freetextInput') || 
+                         document.getElementById('analysisInput') || 
+                         document.getElementById('sequenceExplanation');
+            const text = input.value;
+            
+            // Simulate analysis
+            const hasKeyInsights = text.length > 200 && 
+                                  (text.toLowerCase().includes('bias') || 
+                                   text.toLowerCase().includes('assumption') || 
+                                   text.toLowerCase().includes('leading'));
+            
+            addMentorFeedback(scenario.feedback, hasKeyInsights, 
+                `I see you've identified ${hasKeyInsights ? 'several key' : 'some'} patterns. Let me add to your analysis...`);
+            
+            document.getElementById('submitBtn').textContent = 'Next Scenario';
+            document.getElementById('submitBtn').onclick = nextScenario;
+        }
+
+        function submitDialogue() {
+            const scenario = currentScenarios[currentScenarioIndex];
+            const input = document.getElementById('dialogueInput');
+            const text = input.value;
+            
+            if (text.length < 100) {
+                addMentorMessage("Please provide a more detailed response to demonstrate your understanding.");
+                return;
+            }
+            
+            // Add user message to chat
+            addMentorMessage(`<div style="background: #4a5568; font-style: italic;">Your response: "${text.substring(0, 100)}..."</div>`);
+            
+            // Add mentor response
+            const round = scenario.rounds[dialogueRound];
+            addMentorMessage(round.mentorResponse, 1000);
+            
+            dialogueRound++;
+            
+            if (dialogueRound < scenario.rounds.length) {
+                // Load next round
+                setTimeout(() => {
+                    loadDialogue(scenario, document.getElementById('exerciseContent'));
+                }, 2000);
+            } else {
+                // Complete
+                setTimeout(() => {
+                    document.getElementById('submitBtn').textContent = 'Next Scenario';
+                    document.getElementById('submitBtn').onclick = nextScenario;
+                }, 2000);
+            }
+        }
+
+        function addMentorFeedback(feedback, isGood, prefix = '') {
+            const chat = document.getElementById('mentorChat');
+            
+            if (prefix) {
+                addMentorMessage(prefix);
+            }
+            
+            setTimeout(() => {
+                addMentorMessage(feedback.initial);
+            }, 500);
+            
+            setTimeout(() => {
+                addMentorMessage(feedback.teaching, 1000);
+            }, 1500);
+            
+            setTimeout(() => {
+                addMentorMessage(`
+                    <div class="insight-box">
+                        <strong>Key Pattern:</strong> ${feedback.pattern}
+                    </div>
+                `, 1000);
+            }, 2500);
+        }
+
+        function addMentorMessage(content, delay = 0) {
+            const chat = document.getElementById('mentorChat');
+            
+            if (delay > 0) {
+                const typing = document.createElement('div');
+                typing.className = 'mentor-message';
+                typing.innerHTML = `
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+                chat.appendChild(typing);
+                chat.scrollTop = chat.scrollHeight;
+                
+                setTimeout(() => {
+                    typing.innerHTML = content;
+                    chat.scrollTop = chat.scrollHeight;
+                }, delay);
+            } else {
+                const message = document.createElement('div');
+                message.className = 'mentor-message';
+                message.innerHTML = content;
+                chat.appendChild(message);
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
+        function skipScenario() {
+            // Add mentor message about skipping
+            addMentorMessage(`
+                No problem - sometimes it's better to move on and come back later. 
+                <span class='pattern-highlight'>Skipping is a valid learning strategy</span> when you're stuck.
+            `);
+            
+            // Move to next scenario after a brief delay
+            setTimeout(() => {
+                nextScenario();
+            }, 1500);
+        }
+
+        function nextScenario() {
+            currentScenarioIndex++;
+            
+            if (currentScenarioIndex >= currentScenarios.length) {
+                // Level complete
+                showLevelComplete();
+            } else {
+                // Reset button
+                document.getElementById('submitBtn').textContent = 'Submit Assessment';
+                document.getElementById('submitBtn').onclick = handleSubmit;
+                
+                loadScenario();
+            }
+        }
+
+        function previousScenario() {
+            if (currentScenarioIndex > 0) {
+                currentScenarioIndex--;
+                document.getElementById('submitBtn').textContent = 'Submit Assessment';
+                document.getElementById('submitBtn').onclick = handleSubmit;
+                loadScenario();
+            }
+        }
+
+        function showLevelComplete() {
+            const modal = document.getElementById('levelCompleteModal');
+            
+            if (currentLevel === 'beginner') {
+                document.getElementById('levelCompleteTitle').textContent = 'Beginner Level Complete!';
+                document.getElementById('levelCompleteMessage').textContent = 
+                    "You've mastered identifying obvious question quality patterns. Ready for more subtle distinctions?";
+                document.getElementById('levelProgressFill').style.width = '33%';
+            } else if (currentLevel === 'intermediate') {
+                document.getElementById('levelCompleteTitle').textContent = 'Intermediate Level Complete!';
+                document.getElementById('levelCompleteMessage').textContent = 
+                    "You can now recognize subtle biases and assumptions. Ready to demonstrate synthesis through dialogue?";
+                document.getElementById('levelProgressFill').style.width = '66%';
+            } else {
+                document.getElementById('levelCompleteTitle').textContent = 'Training Complete!';
+                document.getElementById('levelCompleteMessage').textContent = 
+                    "You've developed sophisticated pattern recognition for interview question quality. You're ready for real-world application!";
+                document.getElementById('levelProgressFill').style.width = '100%';
+                document.querySelector('#levelCompleteModal .btn').textContent = 'Restart Training';
+                document.querySelector('#levelCompleteModal .btn').onclick = () => location.reload();
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function continueToNextLevel() {
+            document.getElementById('levelCompleteModal').style.display = 'none';
+            
+            if (currentLevel === 'beginner') {
+                currentLevel = 'intermediate';
+                currentScenarios = scenarios.intermediate;
+                document.getElementById('levelBadge').className = 'level-badge level-intermediate';
+                document.getElementById('levelBadge').textContent = 'INTERMEDIATE';
+            } else if (currentLevel === 'intermediate') {
+                currentLevel = 'advanced';
+                currentScenarios = scenarios.advanced;
+                document.getElementById('levelBadge').className = 'level-badge level-advanced';
+                document.getElementById('levelBadge').textContent = 'ADVANCED';
+            }
+            
+            currentScenarioIndex = 0;
+            loadScenario();
+        }
+    </script>
+</body>
+</html>
