@@ -1,0 +1,108 @@
+novelty_value:
+  display_name: "Insight Novelty"
+  competency: "Insight Quality Recognition"
+  family: "insight_quality"
+  
+  purpose: "Evaluates whether insights reveal new understanding or confirm known issues"
+  
+  concept_explanation: "Novelty value determines if research money was well spent. Novel insights change thinking, reveal hidden problems, or unlock new opportunities. Obvious insights waste resources confirming what everyone knew. The best insights make stakeholders say 'we never realized that!'"
+  
+  values:
+    obvious_known:
+      level: 1
+      label: "Stating the obvious"
+      quality_signal: "VERY_LOW"
+      description: "Everyone already knew this"
+      observable_signals:
+        - "Stakeholders say 'we know'"
+        - "Common sense findings"
+        - "No surprise to anyone"
+      scenario_manifestation: "Research confirms water is wet"
+      real_example:
+        context: "E-commerce study"
+        observation: "Key finding: Users want free shipping - something company knew for years"
+        
+    confirming:
+      level: 2
+      label: "Confirming assumptions"
+      quality_signal: "LOW"
+      description: "Validates what was suspected"
+      observable_signals:
+        - "As expected..."
+        - "Confirms our hypothesis"
+        - "No surprises"
+      scenario_manifestation: "Research proves what team assumed"
+      real_example:
+        context: "Mobile app study"
+        observation: "Confirmed: younger users prefer mobile over desktop"
+        
+    incremental:
+      level: 3
+      label: "Incremental insights"
+      quality_signal: "MEDIUM"
+      description: "Adds nuance to known issues"
+      observable_signals:
+        - "Deeper understanding"
+        - "New details on known problems"
+        - "Unexpected variations"
+      scenario_manifestation: "Known problem but new contributing factors discovered"
+      real_example:
+        context: "Cart abandonment"
+        observation: "Known issue but discovered it's specifically shipping calculator timing"
+        
+    revealing:
+      level: 4
+      label: "Revealing discoveries"
+      quality_signal: "HIGH"
+      description: "Uncovers hidden patterns"
+      observable_signals:
+        - "We never realized..."
+        - "Counterintuitive finding"
+        - "Hidden connection revealed"
+      scenario_manifestation: "Unexpected insight changes team's understanding"
+      real_example:
+        context: "Feature usage study"
+        observation: "Power users avoiding advanced features due to fear of breaking workflows"
+        
+    paradigm_shifting:
+      level: 5
+      label: "Paradigm shifting"
+      quality_signal: "VERY_HIGH"
+      description: "Completely changes understanding"
+      observable_signals:
+        - "Challenges fundamental assumptions"
+        - "Opens new opportunity space"
+        - "Changes entire strategy"
+      scenario_manifestation: "Insight that revolutionizes approach"
+      real_example:
+        context: "User segmentation study"
+        observation: "Discovered primary users are IT admins buying for others, not end users - entire product strategy shifts"
+  
+  scenario_generation:
+    when_primary: "Emphasize stakeholder reactions to insights"
+    when_secondary: "Mention whether findings were surprising"
+    avoid_combinations: ["'paradigm_shifting' rarely comes from small studies"]
+    realistic_pairings:
+      high_quality: ["revealing insights + deep analysis + diverse methods"]
+      low_quality: ["obvious findings + surface-level research"]
+      mixed_quality: ["incremental insights + solid methodology"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Any + Mature product"
+        reason: "After years, need fresh insights to improve"
+      - context: "Enterprise + Innovation initiatives"
+        reason: "Looking for breakthrough opportunities"
+    low_importance:
+      - context: "Startup + Initial validation"
+        reason: "Even confirming basics is valuable early"
+  
+  recognition_patterns:
+    obvious_indicators: ["Everyone knows", "As expected", "No surprises"]
+    subtle_indicators: ["Predictable findings", "Safe conclusions", "Nothing challenged"]
+    misleading_indicators: ["Surprising doesn't mean valuable"]
+  
+  relationships:
+    reinforces: [analytical-depth, pattern-identification, triangulation]
+    tensions_with: [confirmation-bias, safe-research]
+    independent_of: [protocol-consistency, environment-quality]

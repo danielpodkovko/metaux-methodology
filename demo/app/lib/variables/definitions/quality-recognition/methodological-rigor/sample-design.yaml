@@ -1,0 +1,108 @@
+sample_design:
+  display_name: "Sample Design Quality"
+  competency: "Methodological Rigor Recognition"
+  family: "methodological_rigor"
+  
+  purpose: "Assesses whether the sample represents the population and supports valid conclusions"
+  
+  concept_explanation: "Sample design determines whose voices are heard and whether findings generalize. It's not just about size but about representation, diversity, and relevance. A small but well-designed sample beats a large but biased one."
+  
+  values:
+    convenience:
+      level: 1
+      label: "Convenience sample"
+      quality_signal: "VERY_LOW"
+      description: "Whoever was easiest to recruit"
+      observable_signals:
+        - "Friends and family"
+        - "First volunteers who responded"
+        - "Internal employees only"
+      scenario_manifestation: "Tested with whoever was in the office that day"
+      real_example:
+        context: "New feature validation"
+        observation: "Posted in company Slack asking for volunteers, got 10 engineers"
+        
+    biased:
+      level: 2
+      label: "Systematically biased"
+      quality_signal: "LOW"
+      description: "Sample skews toward certain groups"
+      observable_signals:
+        - "Only power users"
+        - "Single demographic dominance"
+        - "Geographic limitation"
+      scenario_manifestation: "All participants from San Francisco tech workers"
+      real_example:
+        context: "Consumer app research"
+        observation: "Recruited only from Twitter, got young, technical, early adopters"
+        
+    acceptable:
+      level: 3
+      label: "Reasonable representation"
+      quality_signal: "MEDIUM"
+      description: "Decent coverage with known limitations"
+      observable_signals:
+        - "Mix of user types"
+        - "Some demographic diversity"
+        - "Acknowledged gaps"
+      scenario_manifestation: "Good mix but missing edge cases and extremes"
+      real_example:
+        context: "E-commerce study"
+        observation: "Range of ages and tech comfort, but all from urban areas"
+        
+    representative:
+      level: 4
+      label: "Representative sample"
+      quality_signal: "HIGH"
+      description: "Accurately reflects target population"
+      observable_signals:
+        - "Matches population demographics"
+        - "Includes edge cases"
+        - "Proper screening criteria"
+      scenario_manifestation: "Sample mirrors actual user base in key dimensions"
+      real_example:
+        context: "Banking app redesign"
+        observation: "Matched customer database on age, income, tech proficiency, geography"
+        
+    statistically_powered:
+      level: 5
+      label: "Statistically powered"
+      quality_signal: "VERY_HIGH"
+      description: "Sample size and design calculated for statistical validity"
+      observable_signals:
+        - "Power analysis conducted"
+        - "Stratified sampling used"
+        - "Confidence intervals stated"
+      scenario_manifestation: "N=384 calculated for 95% confidence with 5% margin"
+      real_example:
+        context: "Pricing study"
+        observation: "Stratified random sample, calculated sample size per segment, recruitment until statistical power achieved"
+  
+  scenario_generation:
+    when_primary: "Detail participant demographics, recruitment method, representation"
+    when_secondary: "Brief mention of who participated"
+    avoid_combinations: ["'statistically_powered' rarely pairs with 'informal' rigor"]
+    realistic_pairings:
+      high_quality: ["representative sample + professional rigor + complete data"]
+      low_quality: ["convenience sample + ad_hoc collection"]
+      mixed_quality: ["biased sample + excellent methodology"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Diverse patient populations"
+        reason: "Missing groups could face health risks"
+      - context: "Enterprise + Global deployment"
+        reason: "Need cultural and regional representation"
+    low_importance:
+      - context: "Startup + Initial validation"
+        reason: "Any user feedback valuable early on"
+  
+  recognition_patterns:
+    obvious_indicators: ["All participants from one source", "Friends and family"]
+    subtle_indicators: ["Missing key user segment", "Over-representation of enthusiasts"]
+    misleading_indicators: ["Large sample doesn't mean representative"]
+  
+  relationships:
+    reinforces: [source-credibility, method-fit, statistical-rigor]
+    tensions_with: [recruitment-budget, timeline-pressure]
+    independent_of: [visual-design, narrative-flow]

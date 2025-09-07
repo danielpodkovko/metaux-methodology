@@ -1,0 +1,108 @@
+confidence_calibration:
+  display_name: "Confidence Calibration"
+  competency: "Insight Quality Recognition"
+  family: "insight_quality"
+  
+  purpose: "Assesses whether confidence in insights matches the strength of evidence"
+  
+  concept_explanation: "Confidence calibration prevents both over-confident decisions based on weak data and under-confident hesitation despite strong evidence. Well-calibrated insights acknowledge limitations, quantify uncertainty, and match claims to proof. Poor calibration leads to bad bets or missed opportunities."
+  
+  values:
+    reckless_certainty:
+      level: 1
+      label: "Recklessly certain"
+      quality_signal: "VERY_LOW"
+      description: "Extreme confidence from minimal data"
+      observable_signals:
+        - "This definitely proves..."
+        - "All users want..."
+        - "No caveats despite small sample"
+      scenario_manifestation: "N=3 presented as universal truth"
+      real_example:
+        context: "Product pivot decision"
+        observation: "Three customer interviews lead to 'We must completely change direction!'"
+        
+    overconfident:
+      level: 2
+      label: "Overconfident claims"
+      quality_signal: "LOW"
+      description: "Confidence exceeds evidence"
+      observable_signals:
+        - "Probably becomes definitely"
+        - "Missing confidence intervals"
+        - "Ignoring contradictions"
+      scenario_manifestation: "Strong claims from moderate evidence"
+      real_example:
+        context: "Feature success prediction"
+        observation: "Limited testing but claiming 'This will double engagement'"
+        
+    appropriate:
+      level: 3
+      label: "Appropriate confidence"
+      quality_signal: "MEDIUM"
+      description: "Claims match evidence strength"
+      observable_signals:
+        - "Qualifiers where needed"
+        - "Limitations acknowledged"
+        - "Confidence intervals provided"
+      scenario_manifestation: "Strong claims for strong evidence, tentative for weak"
+      real_example:
+        context: "Usability findings"
+        observation: "High confidence in observed issues, tentative about causes"
+        
+    cautious:
+      level: 4
+      label: "Appropriately cautious"
+      quality_signal: "HIGH"
+      description: "Conservative interpretation of data"
+      observable_signals:
+        - "Multiple interpretations considered"
+        - "Edge cases acknowledged"
+        - "Further validation suggested"
+      scenario_manifestation: "Even strong patterns presented with appropriate caveats"
+      real_example:
+        context: "A/B test results"
+        observation: "Significant result but notes: seasonal factors, needs longer test"
+        
+    precisely_calibrated:
+      level: 5
+      label: "Precisely calibrated"
+      quality_signal: "VERY_HIGH"
+      description: "Perfect match between evidence and confidence"
+      observable_signals:
+        - "Quantified uncertainty"
+        - "Bayesian thinking evident"
+        - "Graduated confidence levels"
+      scenario_manifestation: "Different confidence levels for different aspects"
+      real_example:
+        context: "Comprehensive study"
+        observation: "95% confident in problem identification, 70% in root cause, 60% in solution effectiveness"
+  
+  scenario_generation:
+    when_primary: "Show how insights are presented with their confidence levels"
+    when_secondary: "Mention whether claims match evidence"
+    avoid_combinations: ["'precisely_calibrated' with 'weak evidence' doesn't work"]
+    realistic_pairings:
+      high_quality: ["appropriate confidence + strong evidence + acknowledged limits"]
+      low_quality: ["reckless certainty + minimal data"]
+      mixed_quality: ["cautious interpretation + solid evidence"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Clinical decisions"
+        reason: "Overconfidence can harm patients"
+      - context: "Fintech + Risk assessment"
+        reason: "Need accurate confidence for risk models"
+    low_importance:
+      - context: "Startup + Fast iteration"
+        reason: "Can quickly test and adjust if wrong"
+  
+  recognition_patterns:
+    obvious_indicators: ["Definitely from n=5", "All users", "Guaranteed results"]
+    subtle_indicators: ["Missing error bars", "No alternative explanations", "Too clean"]
+    misleading_indicators: ["Hedging doesn't mean weak evidence"]
+  
+  relationships:
+    reinforces: [evidence-support, statistical-rigor, bias-management]
+    tensions_with: [stakeholder-pressure, simplification-needs]
+    independent_of: [collection-environment, visual-design]

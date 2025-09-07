@@ -1,0 +1,108 @@
+collection_rigor:
+  display_name: "Data Collection Rigor"
+  competency: "Data Quality Assessment Recognition"
+  family: "data_quality"
+  
+  purpose: "Measures the systematic approach and professional standards applied during data collection"
+  
+  concept_explanation: "Collection rigor reflects how methodically and professionally data is gathered. It encompasses planning, protocol adherence, documentation standards, and researcher discipline. High rigor doesn't guarantee good data, but low rigor almost always compromises it."
+  
+  values:
+    ad_hoc:
+      level: 1
+      label: "Ad hoc/opportunistic"
+      quality_signal: "VERY_LOW"
+      description: "No planning or structure, grabbing whatever data is available"
+      observable_signals:
+        - "No consistent questions or protocol across sessions"
+        - "Different team members collecting different information"
+        - "Making it up as they go along"
+      scenario_manifestation: "Team members randomly grab people in hallways, asking whatever comes to mind"
+      real_example:
+        context: "Startup validating idea at coffee shop"
+        observation: "Founder approaches random customers with different questions each time, no notes template"
+        
+    informal:
+      level: 2
+      label: "Informal/loose"
+      quality_signal: "LOW"
+      description: "Basic structure exists but loosely followed, significant variations"
+      observable_signals:
+        - "General topics to cover but no specific protocol"
+        - "Inconsistent documentation between sessions"
+        - "Researchers improvising significant portions"
+      scenario_manifestation: "Team has rough interview guide but frequently goes off-script, forgets key questions"
+      real_example:
+        context: "Design team conducting user interviews"
+        observation: "Basic question list exists but each interviewer asks differently, takes notes their own way"
+        
+    structured:
+      level: 3
+      label: "Structured approach"
+      quality_signal: "MEDIUM"
+      description: "Clear protocol exists and is generally followed with minor deviations"
+      observable_signals:
+        - "Documented research protocol or guide"
+        - "Consistent core questions across sessions"
+        - "Standard note-taking template used"
+      scenario_manifestation: "Team follows interview guide, captures consistent data points, occasionally adapts questions"
+      real_example:
+        context: "Product team usability testing"
+        observation: "Standard tasks and questions, some flexibility for follow-ups, organized documentation"
+        
+    professional:
+      level: 4
+      label: "Professional standards"
+      quality_signal: "HIGH"
+      description: "Rigorous protocols consistently applied with quality controls"
+      observable_signals:
+        - "Detailed protocol with contingency plans"
+        - "Pilot testing before main study"
+        - "Inter-rater reliability checks"
+      scenario_manifestation: "Research team runs pilot session, refines protocol, maintains consistency across all sessions"
+      real_example:
+        context: "UX agency conducting client research"
+        observation: "Screener, discussion guide, note template, debrief process all standardized and followed"
+        
+    research_grade:
+      level: 5
+      label: "Academic/research grade"
+      quality_signal: "VERY_HIGH"
+      description: "Publication-quality rigor with full methodology documentation"
+      observable_signals:
+        - "IRB approval or ethics review"
+        - "Published methodology that could be replicated"
+        - "Multiple researchers, training, calibration"
+      scenario_manifestation: "Every aspect documented, peer-reviewed protocol, could be replicated by another team"
+      real_example:
+        context: "Healthcare UX research study"
+        observation: "IRB-approved protocol, trained researchers, inter-rater reliability testing, audit trail"
+  
+  scenario_generation:
+    when_primary: "Emphasize planning details, protocol description, how team prepares and executes"
+    when_secondary: "Brief mention of approach - 'quick guerrilla testing' or 'formal study'"
+    avoid_combinations: ["Don't pair 'research_grade' rigor with 'hostile' environment"]
+    realistic_pairings:
+      high_quality: ["professional rigor + controlled environment + comprehensive documentation"]
+      low_quality: ["ad_hoc rigor + disruptive environment + sparse completeness"]
+      mixed_quality: ["structured rigor + convenience sample", "professional rigor + time pressure"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Enterprise + Regulatory requirements"
+        reason: "Medical device research requires documented rigor for FDA"
+      - context: "Fintech + Enterprise + Compliance needs"
+        reason: "Financial services have audit requirements"
+    low_importance:
+      - context: "Ecommerce + Startup + MVP validation"
+        reason: "Speed matters more than perfect methodology"
+  
+  recognition_patterns:
+    obvious_indicators: ["No protocol mentioned", "Each session completely different"]
+    subtle_indicators: ["Protocol exists but not followed", "Drift over time in methodology"]
+    misleading_indicators: ["Lots of documentation doesn't mean rigorous if method is flawed"]
+  
+  relationships:
+    reinforces: [source-credibility, internal-consistency, protocol-consistency]
+    tensions_with: [time-pressure, resource-constraints]
+    independent_of: [visual-design, narrative-flow]

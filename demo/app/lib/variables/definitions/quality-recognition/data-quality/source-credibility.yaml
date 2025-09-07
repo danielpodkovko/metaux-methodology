@@ -1,0 +1,108 @@
+source_credibility:
+  display_name: "Source Credibility"
+  competency: "Data Quality Assessment Recognition"
+  family: "data_quality"
+  
+  purpose: "Evaluates the believability and authenticity of data sources and participants"
+  
+  concept_explanation: "Source credibility examines whether the people providing data are who they claim to be, have relevant experience, and can provide authentic insights. It includes participant screening, recruitment quality, and potential biases in who participates."
+  
+  values:
+    unknown:
+      level: 1
+      label: "Unknown/unverified"
+      quality_signal: "VERY_LOW"
+      description: "No verification of source identity or relevance"
+      observable_signals:
+        - "No screening or verification process"
+        - "Anonymous responses with no context"
+        - "Could be anyone, including bots"
+      scenario_manifestation: "Online survey with no screening, responses could be from anyone or automated"
+      real_example:
+        context: "Public feedback form on website"
+        observation: "Anonymous responses, some obvious spam, no way to verify if actual users"
+        
+    questionable:
+      level: 2
+      label: "Questionable sources"
+      quality_signal: "LOW"
+      description: "Sources may not represent target users or have conflicts"
+      observable_signals:
+        - "Friends and family as participants"
+        - "Employees testing own product"
+        - "Incentivized to give positive feedback"
+      scenario_manifestation: "Team tests with internal employees who know the product roadmap"
+      real_example:
+        context: "Startup validation with team's network"
+        observation: "Founder's friends testing app, obvious desire to be supportive rather than critical"
+        
+    acceptable:
+      level: 3
+      label: "Acceptable credibility"
+      quality_signal: "MEDIUM"
+      description: "Reasonable confidence in source authenticity and relevance"
+      observable_signals:
+        - "Basic screening for target criteria"
+        - "Mix of recruited participants"
+        - "Some verification of identity"
+      scenario_manifestation: "Recruited users who match basic criteria, though not perfectly screened"
+      real_example:
+        context: "User panel participants"
+        observation: "Screened for product usage, verified email, reasonable match to target audience"
+        
+    trusted:
+      level: 4
+      label: "Trusted sources"
+      quality_signal: "HIGH"
+      description: "Well-screened, verified participants matching target profiles"
+      observable_signals:
+        - "Thorough screening process"
+        - "Verified target user characteristics"
+        - "No conflicts of interest"
+      scenario_manifestation: "Carefully screened participants matching exact persona criteria"
+      real_example:
+        context: "Enterprise software research"
+        observation: "Verified job titles, company size, actual software users, behavioral screening passed"
+        
+    authoritative:
+      level: 5
+      label: "Authoritative sources"
+      quality_signal: "VERY_HIGH"
+      description: "Expert users or highly validated sources with deep domain knowledge"
+      observable_signals:
+        - "Subject matter experts"
+        - "Power users with years of experience"
+        - "Multiple validation of credentials"
+      scenario_manifestation: "Industry experts with proven track record providing strategic insights"
+      real_example:
+        context: "Medical device expert review"
+        observation: "Board-certified physicians with 10+ years using similar devices, published papers"
+  
+  scenario_generation:
+    when_primary: "Detail participant background, screening process, potential biases"
+    when_secondary: "Brief mention - 'verified users' or 'convenience sample'"
+    avoid_combinations: ["Don't mix 'authoritative' sources with 'ad_hoc' collection"]
+    realistic_pairings:
+      high_quality: ["trusted sources + professional rigor + comprehensive data"]
+      low_quality: ["questionable sources + informal collection + biased sample"]
+      mixed_quality: ["authoritative sources + poor environment", "unknown sources + professional rigor"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Any + Patient safety"
+        reason: "Need actual patients/clinicians, not proxies"
+      - context: "B2B + Enterprise + Workflow changes"
+        reason: "Need actual users who understand workflow impact"
+    low_importance:
+      - context: "Consumer + Startup + General usability"
+        reason: "Basic usability issues visible with any users"
+  
+  recognition_patterns:
+    obvious_indicators: ["Friends and family", "Anonymous responses", "Team members"]
+    subtle_indicators: ["Professional participants over-familiar with research", "Recruitment bias"]
+    misleading_indicators: ["Job title doesn't guarantee expertise in specific area"]
+  
+  relationships:
+    reinforces: [source-expertise, sample-design, verification-level]
+    tensions_with: [recruitment-timeline, budget-constraints]
+    independent_of: [visual-design, narrative-flow]

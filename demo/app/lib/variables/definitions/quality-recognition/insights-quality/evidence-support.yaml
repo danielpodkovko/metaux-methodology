@@ -1,0 +1,108 @@
+evidence_support:
+  display_name: "Evidence Support"
+  competency: "Insight Quality Recognition"
+  family: "insight_quality"
+  
+  purpose: "Assesses whether insights are backed by solid evidence or speculation"
+  
+  concept_explanation: "Evidence support determines whether insights rest on solid data or shaky assumptions. Strong insights trace directly to observed behaviors, quotes, and metrics. Weak insights involve leaps of logic, assumptions, and 'probably' statements. Evidence is the foundation of trustworthy insights."
+  
+  values:
+    unsupported:
+      level: 1
+      label: "Pure speculation"
+      quality_signal: "VERY_LOW"
+      description: "No evidence, just opinions"
+      observable_signals:
+        - "I think users probably..."
+        - "No data referenced"
+        - "Personal assumptions"
+      scenario_manifestation: "Insights based on what team thinks users want"
+      real_example:
+        context: "Feature prioritization"
+        observation: "PM claims 'users will love this' based on gut feeling, no research done"
+        
+    weak_evidence:
+      level: 2
+      label: "Minimal evidence"
+      quality_signal: "LOW"
+      description: "Single data point or anecdote"
+      observable_signals:
+        - "One user said..."
+        - "Cherry-picked examples"
+        - "Correlation assumed as causation"
+      scenario_manifestation: "Entire strategy based on one customer complaint"
+      real_example:
+        context: "Redesign decision"
+        observation: "CEO's friend couldn't find button, entire nav restructured"
+        
+    reasonable_support:
+      level: 3
+      label: "Reasonable evidence"
+      quality_signal: "MEDIUM"
+      description: "Multiple data points support claim"
+      observable_signals:
+        - "Several examples cited"
+        - "Pattern across participants"
+        - "Some quantification"
+      scenario_manifestation: "Insight supported by consistent observations"
+      real_example:
+        context: "Usability finding"
+        observation: "6 of 10 users struggled with same task, quotes provided"
+        
+    strong_evidence:
+      level: 4
+      label: "Strong evidence base"
+      quality_signal: "HIGH"
+      description: "Multiple sources converge on insight"
+      observable_signals:
+        - "Qualitative and quantitative alignment"
+        - "Multiple methods confirm"
+        - "Statistical significance"
+      scenario_manifestation: "Triangulated evidence from different sources"
+      real_example:
+        context: "Conversion optimization"
+        observation: "Analytics show 47% drop, heatmaps confirm, 8/10 users verbalized confusion"
+        
+    overwhelming_proof:
+      level: 5
+      label: "Overwhelming evidence"
+      quality_signal: "VERY_HIGH"
+      description: "Incontrovertible multi-source proof"
+      observable_signals:
+        - "Every data source confirms"
+        - "No contradicting evidence"
+        - "Causal relationship clear"
+      scenario_manifestation: "Evidence so strong that no alternative explanation exists"
+      real_example:
+        context: "Critical bug impact"
+        observation: "100% failure rate, error logs confirm, user recordings show exact issue, support tickets align"
+  
+  scenario_generation:
+    when_primary: "Show what evidence supports (or doesn't support) the insights"
+    when_secondary: "Mention strength of evidence briefly"
+    avoid_combinations: ["'overwhelming_proof' from 'convenience sample' is suspect"]
+    realistic_pairings:
+      high_quality: ["strong evidence + rigorous methodology + multiple sources"]
+      low_quality: ["unsupported claims + no research"]
+      mixed_quality: ["reasonable support + small sample"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Treatment decisions"
+        reason: "Lives depend on evidence-based decisions"
+      - context: "Enterprise + Major investment"
+        reason: "Big bets need solid evidence"
+    low_importance:
+      - context: "Startup + Rapid experimentation"
+        reason: "Can test assumptions quickly and cheaply"
+  
+  recognition_patterns:
+    obvious_indicators: ["We think", "Probably", "No data but..."]
+    subtle_indicators: ["Single source", "Outlier treated as norm", "Missing contradicting data"]
+    misleading_indicators: ["Confidence doesn't equal evidence"]
+  
+  relationships:
+    reinforces: [triangulation, data-completeness, analytical-depth]
+    tensions_with: [time-pressure, limited-access]
+    independent_of: [visual-design, narrative-flow]

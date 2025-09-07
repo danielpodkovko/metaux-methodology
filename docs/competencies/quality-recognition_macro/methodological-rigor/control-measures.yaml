@@ -1,0 +1,108 @@
+control_measures:
+  display_name: "Control Measures"
+  competency: "Methodological Rigor Recognition"
+  family: "methodological_rigor"
+  
+  purpose: "Evaluates how well the research controls for confounding variables and bias"
+  
+  concept_explanation: "Control measures ensure you're measuring what you think you're measuring. Without controls, you can't separate the effect of your variable from other factors. This includes controlling environment, order effects, researcher bias, and participant variables."
+  
+  values:
+    uncontrolled:
+      level: 1
+      label: "No controls"
+      quality_signal: "VERY_LOW"
+      description: "Multiple variables changing simultaneously"
+      observable_signals:
+        - "Testing new design with new users on new tasks"
+        - "No baseline measurement"
+        - "Researcher bias unchecked"
+      scenario_manifestation: "Changed everything at once, claimed one thing caused improvement"
+      real_example:
+        context: "Site redesign"
+        observation: "Launched new design, new features, new content simultaneously - can't isolate impact"
+        
+    minimal:
+      level: 2
+      label: "Basic controls"
+      quality_signal: "LOW"
+      description: "Some attempt at control but major confounds remain"
+      observable_signals:
+        - "Randomization but no matching"
+        - "Single researcher, no bias check"
+        - "Some variables controlled, others not"
+      scenario_manifestation: "Randomized participants but didn't control for experience level"
+      real_example:
+        context: "Feature comparison"
+        observation: "Random assignment to A/B test, but version A users were all morning people, version B afternoon"
+        
+    standard:
+      level: 3
+      label: "Standard controls"
+      quality_signal: "MEDIUM"
+      description: "Common confounds addressed"
+      observable_signals:
+        - "Counterbalancing order"
+        - "Baseline measurements"
+        - "Random assignment"
+      scenario_manifestation: "Controlled for major variables, some minor confounds remain"
+      real_example:
+        context: "Usability comparison"
+        observation: "Randomized task order, controlled for experience, but didn't control for time of day"
+        
+    rigorous:
+      level: 4
+      label: "Rigorous controls"
+      quality_signal: "HIGH"
+      description: "Comprehensive control of variables"
+      observable_signals:
+        - "Multiple control conditions"
+        - "Researcher blind to conditions"
+        - "Environmental constants"
+      scenario_manifestation: "Careful isolation of variables with multiple controls"
+      real_example:
+        context: "Performance study"
+        observation: "Control group, matched samples, double-blind protocol, standardized environment"
+        
+    laboratory_grade:
+      level: 5
+      label: "Laboratory-grade controls"
+      quality_signal: "VERY_HIGH"
+      description: "Every possible confound identified and controlled"
+      observable_signals:
+        - "Multiple control groups"
+        - "Placebo conditions"
+        - "Statistical control of covariates"
+      scenario_manifestation: "Publication-quality experimental control"
+      real_example:
+        context: "Cognitive load study"
+        observation: "Eye-tracking calibration, controlled lighting, sound-proof room, physiological monitoring, multiple control conditions"
+  
+  scenario_generation:
+    when_primary: "Describe what's being controlled vs what's varying"
+    when_secondary: "Mention level of experimental control"
+    avoid_combinations: ["'laboratory_grade' with 'guerrilla testing'"]
+    realistic_pairings:
+      high_quality: ["rigorous controls + optimal environment + professional rigor"]
+      low_quality: ["uncontrolled + convenience sample + informal collection"]
+      mixed_quality: ["standard controls + hostile environment"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Treatment comparison"
+        reason: "Uncontrolled variables could affect patient outcomes"
+      - context: "Fintech + Algorithm testing"
+        reason: "Need to isolate algorithm performance from other factors"
+    low_importance:
+      - context: "Startup + Exploratory research"
+        reason: "Looking for any signal, not causal proof"
+  
+  recognition_patterns:
+    obvious_indicators: ["Everything changed at once", "No baseline", "No randomization"]
+    subtle_indicators: ["Order effects", "Researcher expectations influencing", "Time of day variations"]
+    misleading_indicators: ["Complex statistics don't fix poor control"]
+  
+  relationships:
+    reinforces: [method-fit, statistical-rigor, analytical-depth]
+    tensions_with: [natural-context, time-pressure]
+    independent_of: [narrative-flow, audience-fit]

@@ -1,0 +1,94 @@
+data_completeness:
+  display_name: "Data Completeness"
+  competency: "Data Quality Assessment Recognition"
+  family: "data_quality"
+  
+  purpose: "Assesses gaps, missing data points, and coverage of intended information"
+  
+  concept_explanation: "Data completeness examines whether all planned data was actually collected and documented. Missing data can occur from dropouts, technical failures, poor documentation, or inadequate planning. Even small gaps can invalidate findings if they're in critical areas."
+  
+  values:
+    sparse_gaps:
+      level: 1
+      label: "Sparse with major gaps"
+      quality_signal: "VERY_LOW"
+      description: "More missing than present, critical data absent"
+      observable_signals:
+        - "Over 50% of planned data missing"
+        - "Key metrics not captured at all"
+        - "Can't answer basic research questions"
+      scenario_manifestation: "Report mentions 'data unavailable' repeatedly, core questions unanswered"
+      real_example:
+        context: "Mobile app testing session"
+        observation: "Recording failed for 7/10 sessions, task completion data missing, only remember 'users struggled'"
+        
+    significant_missing:
+      level: 2
+      label: "Significant gaps"
+      quality_signal: "LOW"
+      description: "Notable gaps that limit analysis options"
+      observable_signals:
+        - "25-50% of data points missing"
+        - "Some complete sessions, others fragmentary"
+        - "Inconsistent data across participants"
+      scenario_manifestation: "Half the participants missing demographic data, several incomplete task recordings"
+      real_example:
+        context: "Remote user research study"
+        observation: "5 full recordings, 3 audio only, 4 just notes, can't compare across all users"
+        
+    mostly_complete:
+      level: 3
+      label: "Mostly complete"
+      quality_signal: "MEDIUM"
+      description: "Minor gaps that don't affect main findings"
+      observable_signals:
+        - "80-90% data captured"
+        - "Core research questions answerable"
+        - "Some nice-to-have data missing"
+      scenario_manifestation: "Main task data complete, missing some demographic details or optional feedback"
+      real_example:
+        context: "Usability study of checkout flow"
+        observation: "All task completions tracked, most think-aloud captured, few post-task ratings missing"
+        
+    comprehensive:
+      level: 4
+      label: "Comprehensive coverage"
+      quality_signal: "HIGH"
+      description: "All planned data successfully collected with minimal gaps"
+      observable_signals:
+        - "95%+ completion rate"
+        - "All critical metrics captured"
+        - "Rich supplementary data"
+      scenario_manifestation: "Complete data for all participants, all planned metrics captured successfully"
+      real_example:
+        context: "Design system component testing"
+        observation: "Every participant completed all tasks, all metrics recorded, screen recordings intact"
+  
+  scenario_generation:
+    when_primary: "Detail what data is missing/present, mention percentages, describe gaps explicitly"
+    when_secondary: "Quick reference to completeness - 'comprehensive data' or 'several gaps'"
+    avoid_combinations: ["Don't have 'comprehensive' data with 'ad_hoc' collection"]
+    realistic_pairings:
+      high_quality: ["comprehensive data + structured protocol + good documentation"]
+      low_quality: ["sparse gaps + poor environment + ad_hoc collection"]
+      mixed_quality: ["comprehensive data + biased sample", "mostly complete + professional rigor"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Any + Enterprise + Quantitative decisions"
+        reason: "Statistical analysis requires complete datasets"
+      - context: "Healthcare + Any + Clinical trials"
+        reason: "Regulatory requirements demand complete data"
+    low_importance:
+      - context: "Any + Startup + Directional insights"
+        reason: "Looking for patterns, not statistical significance"
+  
+  recognition_patterns:
+    obvious_indicators: ["'Data not available', 'Recording failed', 'Lost notes'"]
+    subtle_indicators: ["Different N values across metrics", "Selective reporting"]
+    misleading_indicators: ["Lots of data doesn't mean complete if wrong data collected"]
+  
+  relationships:
+    reinforces: [documentation-quality, internal-consistency]
+    tensions_with: [time-pressure, technical-difficulties]
+    independent_of: [method-fit, audience-fit]

@@ -1,0 +1,108 @@
+method_fit:
+  display_name: "Method-Question Fit"
+  competency: "Methodological Rigor Recognition"
+  family: "methodological_rigor"
+  
+  purpose: "Evaluates whether the research method actually answers the research question"
+  
+  concept_explanation: "Method fit examines the alignment between what you're trying to learn and how you're trying to learn it. A perfectly executed study using the wrong method produces invalid results. This is about choosing the right tool for the job - surveys for attitudes, observation for behavior, experiments for causation."
+  
+  values:
+    mismatched:
+      level: 1
+      label: "Fundamentally mismatched"
+      quality_signal: "VERY_LOW"
+      description: "Method cannot possibly answer the research question"
+      observable_signals:
+        - "Asking users to predict future behavior"
+        - "Survey about visual design preferences"
+        - "Focus group for individual task performance"
+      scenario_manifestation: "Team uses survey to understand why users can't complete tasks"
+      real_example:
+        context: "Checkout abandonment study"
+        observation: "Sent email survey asking 'Why did you abandon checkout?' - users don't remember or make up reasons"
+        
+    loosely_related:
+      level: 2
+      label: "Tangentially related"
+      quality_signal: "LOW"
+      description: "Method provides indirect or partial insights"
+      observable_signals:
+        - "Interviews about behavior instead of observation"
+        - "Prototype testing for market sizing"
+        - "Usability testing for strategic decisions"
+      scenario_manifestation: "Using interviews to understand task completion issues instead of watching users"
+      real_example:
+        context: "Mobile app usability"
+        observation: "Asked users to describe how they use the app instead of observing actual usage"
+        
+    appropriate:
+      level: 3
+      label: "Generally appropriate"
+      quality_signal: "MEDIUM"
+      description: "Method reasonably matches question with some limitations"
+      observable_signals:
+        - "Standard method for this type of question"
+        - "Will answer main question, miss nuances"
+        - "Industry-accepted approach"
+      scenario_manifestation: "Usability testing to identify interface issues, though missing context of real use"
+      real_example:
+        context: "Feature prioritization"
+        observation: "Card sorting for information architecture - good method but doesn't capture all navigation patterns"
+        
+    optimal:
+      level: 4
+      label: "Well-matched method"
+      quality_signal: "HIGH"
+      description: "Method directly addresses research question"
+      observable_signals:
+        - "Clear connection between method and question"
+        - "Captures both what and why"
+        - "Minimal inference needed"
+      scenario_manifestation: "A/B test for conversion rate, ethnography for context understanding"
+      real_example:
+        context: "Conversion optimization"
+        observation: "A/B test with large sample to measure actual behavior change, not opinions"
+        
+    precisely_targeted:
+      level: 5
+      label: "Perfect methodological fit"
+      quality_signal: "VERY_HIGH"
+      description: "Method precisely designed for specific question"
+      observable_signals:
+        - "Custom methodology for unique question"
+        - "Multiple methods triangulating"
+        - "Addresses all aspects of question"
+      scenario_manifestation: "Mixed methods with observation, measurement, and inquiry perfectly sequenced"
+      real_example:
+        context: "Complex workflow analysis"
+        observation: "Diary study + shadowing + task analysis + interviews, each revealing different layers"
+  
+  scenario_generation:
+    when_primary: "Emphasize the research question first, then show method choice"
+    when_secondary: "Brief mention of method selection"
+    avoid_combinations: ["Don't pair 'precisely_targeted' with 'ad_hoc' collection"]
+    realistic_pairings:
+      high_quality: ["optimal method + professional rigor + appropriate sample"]
+      low_quality: ["mismatched method + questionable sources"]
+      mixed_quality: ["appropriate method + poor execution"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Clinical decisions"
+        reason: "Wrong method could impact patient safety"
+      - context: "Fintech + Risk assessment"
+        reason: "Need behavioral data, not stated preferences"
+    low_importance:
+      - context: "Any + Early exploration"
+        reason: "Any data better than no data when exploring"
+  
+  recognition_patterns:
+    obvious_indicators: ["Survey for behavior", "Focus group for individual preferences"]
+    subtle_indicators: ["Right method, wrong depth", "Missing contextual methods"]
+    misleading_indicators: ["Popular method doesn't mean appropriate method"]
+  
+  relationships:
+    reinforces: [sample-design, statistical-rigor, analysis-depth]
+    tensions_with: [time-constraints, available-resources]
+    independent_of: [polish-level, visual-design]

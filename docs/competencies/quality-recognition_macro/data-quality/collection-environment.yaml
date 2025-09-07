@@ -1,0 +1,108 @@
+collection_environment:
+  display_name: "Data Collection Environment"
+  competency: "Data Quality Assessment Recognition"
+  family: "data_quality"
+  
+  purpose: "Assesses whether physical and social environment enables or corrupts quality data collection"
+  
+  concept_explanation: "The collection environment encompasses all external factors during data gathering - physical space, technical setup, social dynamics, and interruptions. Even the best methodology can be undermined by a hostile environment, while a well-controlled environment enables authentic responses."
+  
+  values:
+    hostile:
+      level: 1
+      label: "Actively hostile"
+      quality_signal: "VERY_LOW"
+      description: "Environment actively corrupts data through hostility or system failures"
+      observable_signals:
+        - "Participants angry about situation itself"
+        - "Technical systems failing during collection"
+        - "Researchers abandoning protocol due to chaos"
+      scenario_manifestation: "Session degenerates into complaints about problems rather than feedback"
+      real_example:
+        context: "Testing during system outage"
+        observation: "Users couldn't complete tasks due to crashes, sessions became venting about reliability"
+        
+    disruptive:
+      level: 2
+      label: "Significantly disruptive"
+      quality_signal: "LOW"
+      description: "Environment introduces noise and interruptions compromising quality"
+      observable_signals:
+        - "Multiple interruptions breaking flow"
+        - "Background noise obscuring responses"
+        - "Participants visibly distracted"
+      scenario_manifestation: "Researchers struggle to hear responses, participants keep losing focus"
+      real_example:
+        context: "Coffee shop interviews"
+        observation: "Espresso machine noise made recordings partially inaudible, participants kept checking phones"
+        
+    suboptimal:
+      level: 3
+      label: "Less than ideal"
+      quality_signal: "MEDIUM"
+      description: "Minor environmental issues requiring workarounds"
+      observable_signals:
+        - "Occasional interruptions managed well"
+        - "Some constraints acknowledged in notes"
+        - "Researchers successfully adapt"
+      scenario_manifestation: "Team works around minor issues, maintains data quality despite constraints"
+      real_example:
+        context: "Conference room with some distractions"
+        observation: "Closed doors when needed, repeated questions after interruptions, all critical data captured"
+        
+    controlled:
+      level: 4
+      label: "Well-controlled"
+      quality_signal: "HIGH"
+      description: "Environment supports quality data collection"
+      observable_signals:
+        - "Quiet, private space"
+        - "Participants relaxed and focused"
+        - "Technical setup working smoothly"
+      scenario_manifestation: "Participants can think deeply and respond thoughtfully"
+      real_example:
+        context: "Dedicated research room"
+        observation: "No interruptions, good recording quality, participants took time with responses"
+        
+    optimal:
+      level: 5
+      label: "Purpose-built optimal"
+      quality_signal: "VERY_HIGH"
+      description: "Environment specifically designed for research quality"
+      observable_signals:
+        - "Professional research facility"
+        - "All environmental variables controlled"
+        - "Participants comment on comfort"
+      scenario_manifestation: "Environment actively enhances data quality through thoughtful design"
+      real_example:
+        context: "Usability lab setup"
+        observation: "One-way mirror, perfect recording, comfortable seating, participants fully engaged"
+  
+  scenario_generation:
+    when_primary: "Describe sounds, interruptions, space, technical issues, participant comfort in detail"
+    when_secondary: "Brief environmental mention - 'quiet room' or 'busy office'"
+    avoid_combinations: ["'Optimal' environment with 'ad_hoc' collection is unlikely"]
+    realistic_pairings:
+      high_quality: ["controlled environment + professional rigor + comprehensive data"]
+      low_quality: ["disruptive environment + rushed timing + incomplete data"]
+      mixed_quality: ["optimal environment + convenience sample", "hostile environment + structured protocol"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Any + Sensitive topics"
+        reason: "Privacy and comfort essential for health discussions"
+      - context: "Any + Any + Think-aloud protocol"
+        reason: "Need quiet environment to hear verbalization"
+    low_importance:
+      - context: "Retail + Any + Contextual inquiry"
+        reason: "Natural environment noise is part of context"
+  
+  recognition_patterns:
+    obvious_indicators: ["Can't hear responses", "System crashes", "Participants leave early"]
+    subtle_indicators: ["Shortened responses", "Body language shows discomfort", "Researchers rush"]
+    misleading_indicators: ["Fancy lab doesn't guarantee good environment if intimidating"]
+  
+  relationships:
+    reinforces: [collection-rigor, data-completeness, documentation-quality]
+    tensions_with: [budget-constraints, timeline-pressure, natural-context]
+    independent_of: [method-fit, statistical-rigor]

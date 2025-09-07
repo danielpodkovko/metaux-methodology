@@ -1,0 +1,108 @@
+research_timing:
+  display_name: "Research Timing"
+  competency: "Methodological Rigor Recognition"
+  family: "methodological_rigor"
+  
+  purpose: "Evaluates whether research happens when users naturally engage with the problem"
+  
+  concept_explanation: "Research timing affects validity because user needs, behaviors, and contexts vary by time. Testing tax software in October misses deadline stress. Testing morning routines at 3pm misses authentic context. Timing can make the difference between genuine and artificial insights."
+  
+  values:
+    invalidating:
+      level: 1
+      label: "Invalidating timing"
+      quality_signal: "VERY_LOW"
+      description: "Timing completely undermines validity"
+      observable_signals:
+        - "Testing seasonal product off-season"
+        - "Crisis response during calm period"
+        - "Future behavior asked retrospectively"
+      scenario_manifestation: "Testing holiday shopping patterns in February"
+      real_example:
+        context: "Tax software study"
+        observation: "Tested in June when users have no urgency or real documents"
+        
+    poor:
+      level: 2
+      label: "Poor timing"
+      quality_signal: "LOW"
+      description: "Timing significantly affects authenticity"
+      observable_signals:
+        - "Wrong time of day for use case"
+        - "Too early/late in customer journey"
+        - "Missing contextual pressures"
+      scenario_manifestation: "Testing morning productivity app in afternoon sessions"
+      real_example:
+        context: "Commute app testing"
+        observation: "Tested in office instead of during actual commute"
+        
+    acceptable:
+      level: 3
+      label: "Acceptable timing"
+      quality_signal: "MEDIUM"
+      description: "Reasonable proxy for actual use"
+      observable_signals:
+        - "Close enough to real context"
+        - "Some temporal validity"
+        - "Limitations acknowledged"
+      scenario_manifestation: "Testing within reasonable window of actual use"
+      real_example:
+        context: "Lunch ordering app"
+        observation: "Tested at 11am, close enough to lunch decision time"
+        
+    natural:
+      level: 4
+      label: "Natural timing"
+      quality_signal: "HIGH"
+      description: "Research during actual use periods"
+      observable_signals:
+        - "In-the-moment research"
+        - "Seasonal alignment"
+        - "Authentic time pressure"
+      scenario_manifestation: "Catching users when they naturally engage with problem"
+      real_example:
+        context: "Black Friday shopping"
+        observation: "Tested during actual Black Friday with real shopping goals"
+        
+    optimal:
+      level: 5
+      label: "Optimal timing"
+      quality_signal: "VERY_HIGH"
+      description: "Perfect temporal validity"
+      observable_signals:
+        - "Longitudinal at key moments"
+        - "Multiple time points captured"
+        - "Full temporal context"
+      scenario_manifestation: "Research perfectly timed across entire user journey"
+      real_example:
+        context: "Student registration system"
+        observation: "Tested during actual registration period with real course selection pressure"
+  
+  scenario_generation:
+    when_primary: "Emphasize when research happened vs when behavior occurs"
+    when_secondary: "Mention timing considerations"
+    avoid_combinations: ["'optimal timing' rarely happens with 'high pressure'"]
+    realistic_pairings:
+      high_quality: ["natural timing + representative sample + appropriate method"]
+      low_quality: ["invalidating timing + convenience sample"]
+      mixed_quality: ["acceptable timing + good methodology"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "E-commerce + Seasonal shopping"
+        reason: "Shopping behavior completely different in/out of season"
+      - context: "Healthcare + Emergency protocols"
+        reason: "Can't simulate real emergency pressure"
+    low_importance:
+      - context: "Enterprise + General usability"
+        reason: "Basic usability issues visible anytime"
+  
+  recognition_patterns:
+    obvious_indicators: ["Tax software in summer", "Holiday shopping in spring"]
+    subtle_indicators: ["Morning app tested afternoon", "Missing deadline pressure"]
+    misleading_indicators: ["Recent doesn't mean right timing"]
+  
+  relationships:
+    reinforces: [method-fit, source-credibility, collection-environment]
+    tensions_with: [researcher-availability, participant-scheduling]
+    independent_of: [polish-level, visual-design]

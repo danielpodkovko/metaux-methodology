@@ -1,0 +1,108 @@
+actionability:
+  display_name: "Insight Actionability"
+  competency: "Insight Quality Recognition"
+  family: "insight_quality"
+  
+  purpose: "Measures how directly insights translate into specific actions or decisions"
+  
+  concept_explanation: "Actionability determines whether insights lead to clear next steps or remain abstract observations. The best insights don't just describe problems but point to solutions. Vague insights like 'improve user experience' waste time, while specific insights like 'move payment button above fold' drive immediate action."
+  
+  values:
+    useless:
+      level: 1
+      label: "No actionable content"
+      quality_signal: "VERY_LOW"
+      description: "Insights that lead nowhere"
+      observable_signals:
+        - "Generic observations anyone could make"
+        - "No clear next steps"
+        - "Circular reasoning"
+      scenario_manifestation: "Research concludes 'users want better experience' with no specifics"
+      real_example:
+        context: "Website redesign research"
+        observation: "Final insight: 'Make it more user-friendly' - team has no idea what to actually do"
+        
+    vague_direction:
+      level: 2
+      label: "Vague directional guidance"
+      quality_signal: "LOW"
+      description: "Points generally but lacks specificity"
+      observable_signals:
+        - "Broad suggestions without detail"
+        - "Multiple interpretations possible"
+        - "Requires significant translation"
+      scenario_manifestation: "Suggests 'simplify the process' without identifying what to simplify"
+      real_example:
+        context: "Checkout optimization"
+        observation: "Insight: 'Reduce friction' - but which friction points? How?"
+        
+    somewhat_actionable:
+      level: 3
+      label: "Somewhat actionable"
+      quality_signal: "MEDIUM"
+      description: "Clear direction but needs interpretation"
+      observable_signals:
+        - "Identifies what but not how"
+        - "Requires some planning to implement"
+        - "General approach clear"
+      scenario_manifestation: "Points to problem areas with general solution direction"
+      real_example:
+        context: "Onboarding flow"
+        observation: "Users confused by step 3 terminology - need clearer language"
+        
+    clear_actions:
+      level: 4
+      label: "Clear action items"
+      quality_signal: "HIGH"
+      description: "Specific actions with clear implementation path"
+      observable_signals:
+        - "Specific what and how"
+        - "Clear priority and sequence"
+        - "Measurable outcomes"
+      scenario_manifestation: "Detailed recommendations with implementation guidance"
+      real_example:
+        context: "Form optimization"
+        observation: "Move email field to top, add inline validation, change button text to 'Continue'"
+        
+    immediately_implementable:
+      level: 5
+      label: "Ready to implement"
+      quality_signal: "VERY_HIGH"
+      description: "So specific that teams can start immediately"
+      observable_signals:
+        - "Includes specifications"
+        - "Priority and effort estimated"
+        - "Success metrics defined"
+      scenario_manifestation: "Insights include mockups, copy, and implementation plan"
+      real_example:
+        context: "Error message improvement"
+        observation: "Replace 'Error 403' with 'You need to log in first. [Login button]' - mockup and A/B test plan included"
+  
+  scenario_generation:
+    when_primary: "Show the insights/recommendations and their specificity level"
+    when_secondary: "Mention whether findings lead to clear next steps"
+    avoid_combinations: ["'immediately_implementable' rarely comes from 'ad_hoc' research"]
+    realistic_pairings:
+      high_quality: ["clear actions + strong evidence + specific details"]
+      low_quality: ["useless insights + weak evidence + generic language"]
+      mixed_quality: ["somewhat actionable + good research"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Any + Sprint planning"
+        reason: "Team needs specific tasks for next sprint"
+      - context: "Startup + Limited resources"
+        reason: "Can't afford to interpret vague guidance"
+    low_importance:
+      - context: "Any + Strategic planning"
+        reason: "High-level direction valuable even if not specific"
+  
+  recognition_patterns:
+    obvious_indicators: ["Users want it better", "Improve the experience"]
+    subtle_indicators: ["Missing the 'how'", "Multiple possible interpretations"]
+    misleading_indicators: ["Long recommendations aren't necessarily actionable"]
+  
+  relationships:
+    reinforces: [specificity, evidence-support, analytical-depth]
+    tensions_with: [scope-creep, over-simplification]
+    independent_of: [collection-environment, visual-design]

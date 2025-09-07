@@ -1,0 +1,108 @@
+protocol_consistency:
+  display_name: "Protocol Consistency"
+  competency: "Methodological Rigor Recognition"
+  family: "methodological_rigor"
+  
+  purpose: "Measures how consistently research procedures are followed across sessions"
+  
+  concept_explanation: "Protocol consistency ensures each participant has a comparable experience, making data comparable. Inconsistency introduces noise and makes it impossible to know if differences come from participants or procedure variations. This is about standardization versus chaos."
+  
+  values:
+    chaotic:
+      level: 1
+      label: "Chaotic/no protocol"
+      quality_signal: "VERY_LOW"
+      description: "Every session completely different"
+      observable_signals:
+        - "Different questions each time"
+        - "Researchers doing own thing"
+        - "No documentation of approach"
+      scenario_manifestation: "Each researcher improvises, no two sessions alike"
+      real_example:
+        context: "Customer feedback sessions"
+        observation: "Three researchers, three completely different approaches, can't compare findings"
+        
+    variable:
+      level: 2
+      label: "Highly variable"
+      quality_signal: "LOW"
+      description: "Major inconsistencies between sessions"
+      observable_signals:
+        - "Core structure varies"
+        - "Key questions sometimes skipped"
+        - "Different tools/materials used"
+      scenario_manifestation: "Protocol exists but frequently ignored or modified"
+      real_example:
+        context: "User interviews"
+        observation: "Interview guide exists but researchers go off-script, forget key questions"
+        
+    mostly_consistent:
+      level: 3
+      label: "Generally consistent"
+      quality_signal: "MEDIUM"
+      description: "Core protocol followed with minor variations"
+      observable_signals:
+        - "Same key questions asked"
+        - "Similar session structure"
+        - "Documented deviations"
+      scenario_manifestation: "Standard protocol with flexibility for follow-ups"
+      real_example:
+        context: "Usability testing"
+        observation: "Same tasks for all users, follow-up questions vary based on responses"
+        
+    standardized:
+      level: 4
+      label: "Standardized protocol"
+      quality_signal: "HIGH"
+      description: "Consistent procedures with controlled variations"
+      observable_signals:
+        - "Detailed protocol followed"
+        - "Scripted introductions"
+        - "Minimal unplanned deviation"
+      scenario_manifestation: "Every participant gets nearly identical experience"
+      real_example:
+        context: "Benchmark study"
+        observation: "Scripted sessions, timed segments, standardized prompts, deviation log maintained"
+        
+    strict_adherence:
+      level: 5
+      label: "Strict protocol adherence"
+      quality_signal: "VERY_HIGH"
+      description: "Zero deviation from protocol"
+      observable_signals:
+        - "Word-for-word scripts"
+        - "Exact timing maintained"
+        - "Multiple researcher calibration"
+      scenario_manifestation: "Laboratory-precision consistency across all sessions"
+      real_example:
+        context: "Clinical UX trial"
+        observation: "Verbatim scripts, timer-controlled segments, researcher training and certification"
+  
+  scenario_generation:
+    when_primary: "Show how procedures vary or remain consistent across sessions"
+    when_secondary: "Mention standardization level"
+    avoid_combinations: ["'strict_adherence' with 'ad_hoc' recruitment"]
+    realistic_pairings:
+      high_quality: ["standardized protocol + professional rigor + controlled environment"]
+      low_quality: ["chaotic protocol + informal collection"]
+      mixed_quality: ["mostly consistent + time pressure"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Comparative studies"
+        reason: "Inconsistency invalidates comparisons"
+      - context: "Enterprise + Benchmarking"
+        reason: "Need comparable data across sessions"
+    low_importance:
+      - context: "Startup + Exploratory interviews"
+        reason: "Flexibility more valuable than consistency"
+  
+  recognition_patterns:
+    obvious_indicators: ["Different questions per session", "No protocol mentioned"]
+    subtle_indicators: ["Protocol drift over time", "Researcher personality affecting"]
+    misleading_indicators: ["Having a protocol doesn't mean following it"]
+  
+  relationships:
+    reinforces: [collection-rigor, data-completeness, internal-consistency]
+    tensions_with: [natural-conversation, participant-needs]
+    independent_of: [visual-design, stakeholder-readiness]

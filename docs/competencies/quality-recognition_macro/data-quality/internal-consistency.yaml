@@ -1,0 +1,94 @@
+internal_consistency:
+  display_name: "Internal Consistency"
+  competency: "Data Quality Assessment Recognition"
+  family: "data_quality"
+  
+  purpose: "Detects contradictions, conflicts, and alignment within the dataset"
+  
+  concept_explanation: "Internal consistency examines whether different parts of the data tell the same story. Inconsistencies might indicate measurement problems, participant confusion, or real complexity. High consistency suggests reliable measurement; low consistency questions data validity."
+  
+  values:
+    contradictory:
+      level: 1
+      label: "Contradictory/conflicting"
+      quality_signal: "VERY_LOW"
+      description: "Data points directly contradict each other"
+      observable_signals:
+        - "Same user gives opposite responses"
+        - "Behavior contradicts stated preferences"
+        - "Metrics show impossible patterns"
+      scenario_manifestation: "Users rate feature 5/5 but nobody uses it, say it's intuitive but all fail"
+      real_example:
+        context: "Feature satisfaction survey"
+        observation: "Users say they love the feature in survey, analytics shows 0% usage, interviews reveal confusion"
+        
+    conflicting:
+      level: 2
+      label: "Conflicting signals"
+      quality_signal: "LOW"
+      description: "Mixed messages that are hard to reconcile"
+      observable_signals:
+        - "Different methods show different results"
+        - "Subgroups have opposing patterns"
+        - "Qual and quant don't align"
+      scenario_manifestation: "Survey shows high satisfaction, but interviews reveal frustration"
+      real_example:
+        context: "Product redesign research"
+        observation: "A/B test shows worse performance, but qualitative feedback is positive"
+        
+    mostly_aligned:
+      level: 3
+      label: "Mostly aligned"
+      quality_signal: "MEDIUM"
+      description: "General agreement with explainable variations"
+      observable_signals:
+        - "Main patterns consistent"
+        - "Minor variations have clear causes"
+        - "Different methods generally agree"
+      scenario_manifestation: "Most data points align, few outliers have reasonable explanations"
+      real_example:
+        context: "Usability testing results"
+        observation: "8/10 users show similar patterns, 2 power users have different but explainable behavior"
+        
+    coherent:
+      level: 4
+      label: "Internally coherent"
+      quality_signal: "HIGH"
+      description: "All data points tell consistent story"
+      observable_signals:
+        - "Multiple data sources converge"
+        - "Patterns hold across segments"
+        - "Qual and quant strongly align"
+      scenario_manifestation: "Task performance, satisfaction ratings, and comments all point same direction"
+      real_example:
+        context: "Design system evaluation"
+        observation: "Task times improved, errors decreased, satisfaction increased, comments praise efficiency"
+  
+  scenario_generation:
+    when_primary: "Show contrasting data points, highlight contradictions or alignment"
+    when_secondary: "Brief note about whether findings align or conflict"
+    avoid_combinations: ["'Coherent' data rarely comes from 'ad_hoc' collection"]
+    realistic_pairings:
+      high_quality: ["coherent data + professional rigor + triangulation"]
+      low_quality: ["contradictory data + questionable sources + poor documentation"]
+      mixed_quality: ["mostly aligned + good rigor", "coherent data + small sample"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Any + Any + Major decisions"
+        reason: "Inconsistent data makes decisions risky"
+      - context: "Fintech + Any + Financial calculations"
+        reason: "Financial data must be internally consistent"
+    low_importance:
+      - context: "Any + Startup + Exploring problem space"
+        reason: "Inconsistency might reveal opportunity"
+  
+  recognition_patterns:
+    obvious_indicators: ["Say one thing, do another", "Numbers don't add up"]
+    subtle_indicators: ["Satisfaction high but renewal low", "Praise feature but use workarounds"]
+    misleading_indicators: ["Perfect consistency might indicate response bias"]
+  
+  relationships:
+    reinforces: [data-completeness, triangulation, pattern-identification]
+    tensions_with: [diverse-perspectives, complex-problems]
+    independent_of: [polish-level, adaptation-timing]

@@ -1,0 +1,108 @@
+specificity:
+  display_name: "Insight Specificity"
+  competency: "Insight Quality Recognition"
+  family: "insight_quality"
+  
+  purpose: "Evaluates the precision and detail level of insights"
+  
+  concept_explanation: "Specificity separates meaningful insights from generic observations. Specific insights name exact problems, identify precise user groups, and pinpoint particular solutions. Generic insights could apply to any product; specific insights only fit this exact situation."
+  
+  values:
+    generic_platitudes:
+      level: 1
+      label: "Generic platitudes"
+      quality_signal: "VERY_LOW"
+      description: "Could apply to literally any product"
+      observable_signals:
+        - "Users want easy to use"
+        - "Speed is important"
+        - "People like nice design"
+      scenario_manifestation: "Insights that sound like fortune cookies"
+      real_example:
+        context: "Mobile app research"
+        observation: "Key finding: 'Users prefer apps that work well'"
+        
+    broad_statements:
+      level: 2
+      label: "Broad generalizations"
+      quality_signal: "LOW"
+      description: "Some relevance but overly general"
+      observable_signals:
+        - "Category-level observations"
+        - "Missing crucial details"
+        - "No user segmentation"
+      scenario_manifestation: "Talks about 'users' as monolithic group"
+      real_example:
+        context: "Feature research"
+        observation: "Users find the navigation confusing' - but which users? Which navigation? How?"
+        
+    focused:
+      level: 3
+      label: "Focused insights"
+      quality_signal: "MEDIUM"
+      description: "Specific to product but lacks detail"
+      observable_signals:
+        - "Names specific features"
+        - "Identifies user segments"
+        - "Some quantification"
+      scenario_manifestation: "Points to specific areas with moderate detail"
+      real_example:
+        context: "Dashboard study"
+        observation: "New users can't find export button in reports section"
+        
+    precise:
+      level: 4
+      label: "Precise details"
+      quality_signal: "HIGH"
+      description: "Exact problems with specific contexts"
+      observable_signals:
+        - "Specific user quotes"
+        - "Exact failure points"
+        - "Quantified impacts"
+      scenario_manifestation: "Names exact issues with supporting details"
+      real_example:
+        context: "Checkout analysis"
+        observation: "67% abandon at shipping calculation when $12+ appears after free shipping promise"
+        
+    laser_targeted:
+      level: 5
+      label: "Laser-targeted precision"
+      quality_signal: "VERY_HIGH"
+      description: "Exhaustive specificity with complete context"
+      observable_signals:
+        - "Exact conditions and triggers"
+        - "Specific user segments and contexts"
+        - "Precise recommendations"
+      scenario_manifestation: "Could only apply to this exact situation"
+      real_example:
+        context: "Error recovery study"
+        observation: "Enterprise admins using SSO get stuck in login loop when session expires during bulk upload - occurs in Chrome 119+ with 2FA enabled"
+  
+  scenario_generation:
+    when_primary: "Show the actual insights with their level of detail"
+    when_secondary: "Indicate whether insights are specific or general"
+    avoid_combinations: ["'laser_targeted' with 'sparse data' is unlikely"]
+    realistic_pairings:
+      high_quality: ["precise specificity + strong evidence + clear patterns"]
+      low_quality: ["generic platitudes + weak methodology"]
+      mixed_quality: ["focused insights + limited sample"]
+    
+  contextual_weight:
+    high_importance:
+      - context: "Healthcare + Safety-critical features"
+        reason: "Vague insights could miss critical safety issues"
+      - context: "Fintech + Compliance requirements"
+        reason: "Regulators need specific details"
+    low_importance:
+      - context: "Startup + Early exploration"
+        reason: "Even broad insights valuable when starting"
+  
+  recognition_patterns:
+    obvious_indicators: ["Users want", "People prefer", "Everyone likes"]
+    subtle_indicators: ["Missing quantification", "No user segmentation", "Vague terms"]
+    misleading_indicators: ["Technical jargon doesn't mean specific"]
+  
+  relationships:
+    reinforces: [actionability, evidence-support, pattern-identification]
+    tensions_with: [oversimplification, scope-limitations]
+    independent_of: [collection-rigor, environment-quality]
